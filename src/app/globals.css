@@ -69,9 +69,15 @@ body {
 		--input: 0 0% 14.9%;
 		--ring: 0 0% 83.1%;
 
-		--bg: 0 0% 16.5%;
-		--main: 0 0% 14.5%;
+		/*  actual values */
+		/* --bg: 0 0% 16.5%;
+		--main: 0 0% 14.5%;	 */
+
+		/*  like these more */
+		--bg: 0 0% 14.5%;
+		--main: 0 0% 12.5%;
 		--dark-main: 0 0% 11.5%;
+		--accent-green: 97, 186, 101;
 	}
 }
 

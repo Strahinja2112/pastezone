@@ -11,7 +11,7 @@ export default function Header({}: Props) {
 	return (
 		<div className="h-14 w-full p-1 max-w-[1340px] flex items-center justify-between">
 			<div className="gap-7 flex items-center justify-center">
-				<Link href="/" className="flex gap-3 items-center justify-center">
+				<Link href="/" className="flex gap-1.5 items-center justify-center">
 					<Image
 						src="/logo-dark.png"
 						alt=""

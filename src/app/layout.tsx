@@ -45,7 +45,7 @@ export default function RootLayout({
 					enableSystem
 					disableTransitionOnChange
 				>
-					<div className="w-full flex flex-col border-b items-center justify-start  bg-bg">
+					<div className="w-full flex flex-col border-b items-center justify-start  bg-gradient-to-b from-[rgb(37,37,37)] to-[rgb(43,43,43)]">
 						<Header />
 					</div>
 					<main className="flex-1 w-full h-full flex flex-col items-center justify-start max-w-[1340px] bg-main">

@@ -25,6 +25,7 @@ module.exports = {
 				main: "hsl(var(--main))",
 				darkmain: "hsl(var(--dark-main))",
 				bg: "hsl(var(--bg))",
+				green: "rgb(var(--accent-green))",
 				primary: {
 					DEFAULT: "hsl(var(--primary))",
 					foreground: "hsl(var(--primary-foreground))",
