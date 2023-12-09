@@ -59,12 +59,23 @@ export default function Header({}: Props) {
 					</div>
 				</div>
 				<div className="flex gap-3 pr-2">
-					<Button variant="outline" size="tiny">
+					<Link
+						href="/log-in"
+						className={buttonVariants({
+							variant: "outline",
+							size: "tiny",
+						})}
+					>
 						LOGIN
-					</Button>
-					<Button className="bg-white" size="tiny">
+					</Link>
+					<Link
+						href="/sign-up"
+						className={buttonVariants({
+							size: "tiny",
+						})}
+					>
 						SIGNUP
-					</Button>
+					</Link>
 				</div>
 			</div>
 		</div>

@@ -1,3 +1,4 @@
+import { TSyntax } from "@/config/select-values";
 import { Globe2 } from "lucide-react";
 import Link from "next/link";
 import React from "react";
