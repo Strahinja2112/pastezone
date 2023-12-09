@@ -1,8 +1,7 @@
 "use client";
-import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
