@@ -1,3 +1,3 @@
 export default function Home() {
-	return <div className="">Strahinja</div>;
+	return <div className="border">asd</div>;
 }
