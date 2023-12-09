@@ -2,8 +2,16 @@
 import Image from "next/image";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { Link2Icon, LogInIcon, Menu, Plus } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import {
+	Sheet,
+	SheetContent,
+	SheetHeader,
+	SheetTitle,
+	SheetTrigger,
+} from "@/components/ui/sheet";
+import MobileMenu from "./mobile-menu";
 
 type Props = {};
 
@@ -11,7 +19,7 @@ export default function Header({}: Props) {
 	return (
 		<div className="w-full fixed top-0 z-[100] flex flex-col border-b items-center justify-start  bg-gradient-to-b from-[rgb(37,37,37)] to-[rgb(43,43,43)]">
 			<div className="h-14 w-full p-1 max-w-[1340px] flex items-center justify-between">
-				<div className="gap-2 md:gap-7 flex items-center justify-center">
+				<div className="gap-5 flex items-center justify-start w-full">
 					<Link href="/" className="flex gap-1.5 items-center justify-center">
 						<Image
 							src="/logo-dark.png"
@@ -57,7 +65,7 @@ export default function Header({}: Props) {
 						/>
 					</div>
 				</div>
-				<div className="flex gap-3 pr-2">
+				<div className="hidden sm:flex gap-3 pr-2">
 					<Link
 						href="/log-in"
 						className={buttonVariants({
@@ -76,6 +84,7 @@ export default function Header({}: Props) {
 						SIGNUP
 					</Link>
 				</div>
+				<MobileMenu />
 			</div>
 		</div>
 	);
