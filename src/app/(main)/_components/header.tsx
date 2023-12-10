@@ -38,7 +38,7 @@ export default function Header({}: Props) {
 							</Link>
 						))}
 					</div>
-					<div className="flex gap-3 text-sm items-center justify-center">
+					<div className="hidden sm:flex gap-3 text-sm items-center justify-center">
 						<Link
 							href="/"
 							className={buttonVariants({
