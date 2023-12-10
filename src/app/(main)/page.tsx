@@ -17,7 +17,6 @@ import {
 	exposures,
 	syntaxLanguages,
 } from "@/config/select-values";
-import { Globe2, InfoIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 

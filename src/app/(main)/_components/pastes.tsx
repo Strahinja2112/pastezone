@@ -1,4 +1,3 @@
-import { Separator } from "@/components/ui/separator";
 import { TSyntax } from "@/config/select-values";
 import { Globe2 } from "lucide-react";
 import Link from "next/link";
