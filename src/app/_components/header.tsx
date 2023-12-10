@@ -31,7 +31,7 @@ export default function Header() {
 							<Link
 								key={el}
 								href={`/${el.toLowerCase()}`}
-								className="hover:underline"
+								className="hover:underline hover:text-white"
 							>
 								{el}
 							</Link>
