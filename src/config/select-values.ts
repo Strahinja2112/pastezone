@@ -24,7 +24,6 @@ export const categories = [
 	"TV",
 	"Writing",
 ] as const;
-export type TCategory = (typeof categories)[number];
 
 export const syntaxLanguages = [
 	"Bash",
@@ -38,10 +37,8 @@ export const syntaxLanguages = [
 	"JavaScript",
 	"TypeScript",
 ] as const;
-export type TSyntax = (typeof syntaxLanguages)[number];
 
 export const exposures = ["Public", "Unlisted", "Private"] as const;
-export type TExposures = (typeof exposures)[number];
 
 export const expirations = [
 	"Never",
@@ -55,4 +52,8 @@ export const expirations = [
 	"6 Months",
 	"1 Year",
 ] as const;
+
+export type TCategory = (typeof categories)[number];
+export type TSyntax = (typeof syntaxLanguages)[number];
+export type TExposures = (typeof exposures)[number];
 export type TExpiration = (typeof expirations)[number];

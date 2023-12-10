@@ -3,11 +3,15 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { cn } from "@/lib/utils";
-import Header from "./(main)/_components/header";
-import Footer from "./(main)/_components/footer";
-import PublicPastes from "./(main)/_components/pastes";
+import Header from "./_components/header";
+import Pastes from "./_components/pastes";
+import Footer from "./_components/footer";
+import SessionProvider from "../components/providers/session-provider";
 
-const font = Inter({ subsets: ["latin"] });
+const font = Inter({
+	weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+	subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
 	title: "Pastezone.com - #1 paste tool!",
@@ -34,7 +38,7 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<html lang="en">
+		<html lang="en" suppressHydrationWarning>
 			<body
 				className={cn(
 					"flex flex-col items-center justify-center bg-bg",
@@ -47,11 +51,14 @@ export default function RootLayout({
 					enableSystem
 					disableTransitionOnChange
 				>
-					<Header />
-					<main className="flex-1 pt-16 w-full h-full flex max-w-[1340px] bg-main gap-3 items-start justify-center p-3">
-						{children}
-					</main>
-					<Footer />
+					<SessionProvider>
+						<Header />
+						<main className="flex-1 pt-16 w-full h-full flex max-w-[1340px] bg-main gap-3 items-start justify-center p-3">
+							{children}
+							<Pastes />
+						</main>
+						<Footer />
+					</SessionProvider>
 				</ThemeProvider>
 			</body>
 		</html>

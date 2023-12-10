@@ -5,11 +5,10 @@ import { buttonVariants } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import UserMenu from "./user-menu";
+import { useSession } from "next-auth/react";
 
-type Props = {};
-
-export default function Header({}: Props) {
-	const user = 1;
+export default function Header() {
+	const { data: session, status } = useSession();
 
 	return (
 		<div className="w-full fixed top-0 z-[100] flex flex-col border-b items-center justify-start  bg-gradient-to-b from-[rgb(37,37,37)] to-[rgb(43,43,43)]">
@@ -60,25 +59,12 @@ export default function Header({}: Props) {
 						/>
 					</div>
 				</div>
-				{user ? (
-					<div className="flex items-center gap-1.5 justify-center">
-						<div className="flex h-full flex-col items-end justify-start">
-							<h4 className="text-xs">Strahinja2112</h4>
-							<h6 className="text-[9px] text-muted-foreground">FREE</h6>
-						</div>
-						<Image
-							src="/guest.png"
-							alt="guest"
-							width={150}
-							height={150}
-							className="w-[30px] h-[30px] rounded-sm"
-						/>
-						<UserMenu />
-					</div>
-				) : (
+				{status === "loading" && <div>Loading...</div>}
+				{status === "authenticated" && <UserMenu user={session.user!} />}
+				{status === "unauthenticated" && (
 					<div className="flex gap-3 pr-2">
 						<Link
-							href="/log-in"
+							href="/api/auth/signin"
 							className={buttonVariants({
 								variant: "outline",
 								size: "tiny",
@@ -87,7 +73,7 @@ export default function Header({}: Props) {
 							LOGIN
 						</Link>
 						<Link
-							href="/sign-up"
+							href="/api/auth/signin"
 							className={buttonVariants({
 								size: "tiny",
 							})}

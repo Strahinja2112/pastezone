@@ -17,8 +17,8 @@ import {
 	exposures,
 	syntaxLanguages,
 } from "@/config/select-values";
-import Image from "next/image";
 import Link from "next/link";
+import UserSection from "./_components/user-section";
 
 export default function Home() {
 	return (
@@ -42,7 +42,7 @@ export default function Home() {
 			<div className="flex flex-col items-center w-full justify-start mt-1">
 				<h2 className="w-full text-lg border-b-2">Optional Paste Settings</h2>
 				<div className="w-full mb-3 flex-col md:flex-row flex items-center justify-center md:items-start md:justify-start">
-					<div className="w-full text-sm font-light md:w-[65%] pr-3 flex flex-col items-center justify-center">
+					<div className="w-full text-sm font-light md:w-[65%] pr-0 md:pr-3 flex flex-col items-center justify-center">
 						<div className="grid w-full py-2 grid-cols-3">
 							<span className="h-full flex items-center">Category:</span>
 							<div className="col-span-2">
@@ -169,35 +169,7 @@ export default function Home() {
 							</div>
 						</div>
 					</div>
-					<div className="md:border-l-2 border-t md:border-t-0 border-b flex items-center justify-start gap-3 w-full md:w-[35%] p-2">
-						<Image
-							src="/guest.png"
-							alt="guest"
-							width={150}
-							height={150}
-							className="w-[60px] h-[60px] border p-[1.5px]"
-						/>
-						<div className="flex gap-1 w-full text-sm flex-col items-start justify-center">
-							<span>
-								Hello <b>Guest</b>
-							</span>
-							<div className="flex gap-2 items-center justify-center">
-								<Link
-									href="/sign-up"
-									className="p-1 px-2 rounded-[3px] border-b-2 bg-[rgb(43,43,43)] transition hover:text-muted-foreground"
-								>
-									Sign up
-								</Link>
-								<span>or</span>
-								<Link
-									href="/log-in"
-									className="p-1 px-2 rounded-[3px] border-b-2 bg-[rgb(43,43,43)] transition hover:text-muted-foreground"
-								>
-									Log in
-								</Link>
-							</div>
-						</div>
-					</div>
+					<UserSection />
 				</div>
 				<Info>
 					<span>

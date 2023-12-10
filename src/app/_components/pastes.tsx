@@ -5,7 +5,7 @@ import React from "react";
 
 type Props = {};
 
-type Paste = {
+export type Paste = {
 	id: string;
 	title: string;
 	syntax: TSyntax;
@@ -15,7 +15,7 @@ type Paste = {
 
 const myPastes: Paste[] = [];
 
-const mockPastes: Paste[] = [
+const publicPastes: Paste[] = [
 	{
 		id: "1",
 		title: "Hello World",
@@ -57,8 +57,8 @@ export default function Pastes({}: Props) {
 			<Link href="/archive" className="transition mb-1 hover:text-blue-300">
 				Public Pastes
 			</Link>
-			{mockPastes.length > 0 ? (
-				mockPastes.map((paste, idx) => <Paste key={idx} {...paste} />)
+			{publicPastes.length > 0 ? (
+				publicPastes.map((paste, idx) => <Paste key={idx} {...paste} />)
 			) : (
 				<div className="flex gap-2 text-sm text-muted-foreground">
 					<Globe2 className="text-muted-foreground h-5 w-5" />
