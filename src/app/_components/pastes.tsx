@@ -1,45 +1,26 @@
-import { TSyntax } from "@/config/select-values";
+import { db } from "@/db";
+import { pastes } from "@/db/schema/pastes";
 import { Globe2 } from "lucide-react";
 import Link from "next/link";
 import React from "react";
-
-type Props = {};
-
-export type Paste = {
-	id: string;
-	title: string;
-	syntax: TSyntax;
-	timeAgo: string;
-	size: string;
-};
+import { Paste } from "@/db/schema/pastes";
+import { create, getByUserId } from "@/db/actions/pastes";
+import { eq } from "drizzle-orm";
+import { users } from "@/db/schema/users";
+import { auth } from "@/auth";
 
 const myPastes: Paste[] = [];
 
-const publicPastes: Paste[] = [
-	{
-		id: "1",
-		title: "Hello World",
-		syntax: "Bash",
-		timeAgo: "5min ago",
-		size: "2KB",
-	},
-	{
-		id: "2",
-		title: "gitlab",
-		syntax: "JavaScript",
-		timeAgo: "15min ago",
-		size: "2.12KB",
-	},
-	{
-		id: "3",
-		title: "main.java",
-		syntax: "Java",
-		timeAgo: "2h ago",
-		size: "12KB",
-	},
-];
+export default async function Pastes() {
+	const session = await auth();
 
-export default function Pastes({}: Props) {
+	const allPublicPastes = await db.select().from(pastes).all();
+
+	// EQ DON'T WORK
+	const myPastes = (await db.select().from(pastes)).filter(
+		(paste) => paste.userId === session?.user!.id
+	);
+
 	return (
 		<div className="hidden lg:flex flex-col items-stretch justify-center w-[25%]">
 			<Link href="/archive" className="transition mb-1 hover:text-blue-300">
@@ -57,8 +38,8 @@ export default function Pastes({}: Props) {
 			<Link href="/archive" className="transition mb-1 hover:text-blue-300">
 				Public Pastes
 			</Link>
-			{publicPastes.length > 0 ? (
-				publicPastes.map((paste, idx) => <Paste key={idx} {...paste} />)
+			{allPublicPastes.length > 0 ? (
+				allPublicPastes.map((paste, idx) => <Paste key={idx} {...paste} />)
 			) : (
 				<div className="flex gap-2 text-sm text-muted-foreground">
 					<Globe2 className="text-muted-foreground h-5 w-5" />
@@ -81,7 +62,7 @@ function Paste(paste: Paste) {
 					{paste.title}
 				</Link>
 				<div className="flex items-center gap-2 text-xs text-muted-foreground">
-					{paste.syntax} | {paste.timeAgo} | {paste.size}
+					{paste.language} | {""} | {paste.size}
 				</div>
 			</div>
 		</div>

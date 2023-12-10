@@ -54,7 +54,9 @@ export default function RootLayout({
 					<SessionProvider>
 						<Header />
 						<main className="flex-1 pt-16 w-full h-full flex max-w-[1340px] bg-main gap-3 items-start justify-center p-3">
-							{children}
+							<div className="w-full flex flex-col items-center justify-center">
+								{children}
+							</div>
 							<Pastes />
 						</main>
 						<Footer />

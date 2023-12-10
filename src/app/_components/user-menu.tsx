@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import { User } from "next-auth";
 
 type TSheetLink = {
@@ -29,6 +29,44 @@ type TSheetLink = {
 	href?: string;
 	onClick?(): void;
 };
+
+const sheetLinks: TSheetLink[] = [
+	{
+		icon: UserIcon,
+		title: "my pastebin",
+		href: `/user/pastebin`,
+	},
+	{
+		icon: Mail,
+		title: "my comments",
+		href: "/user/comments",
+	},
+	{
+		icon: MessageSquare,
+		title: "my messages [0]",
+		href: "/messages",
+	},
+	{
+		icon: Bell,
+		title: "my alerts",
+		href: "/alerts",
+	},
+	{
+		icon: UserCircle,
+		title: "Edit profile",
+		href: "/user/profile",
+	},
+	{
+		icon: Cog,
+		title: "edit settings",
+		href: "/user/settings",
+	},
+	{
+		icon: KeyRound,
+		title: "change password",
+		href: "/user/password",
+	},
+];
 
 export default function UserMenu({ user }: { user: User }) {
 	return (
@@ -50,29 +88,14 @@ export default function UserMenu({ user }: { user: User }) {
 				</div>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className="p-0 w-[200px] text-sm flex flex-col items-center bg-[rgb(43,43,43)] justify-center">
-				<SheetLink icon={UserIcon} title="my pastebin" href={`/u/${user.id}`} />
-				<SheetLink
-					icon={Mail}
-					title="my comments"
-					href={`/u/${user.id}/comments`}
-				/>
-				<SheetLink
-					icon={MessageSquare}
-					title="my messages [0]"
-					href="/messages"
-				/>
-				<SheetLink icon={Bell} title="my alerts" href="/alerts" />
-				<SheetLink
-					icon={UserCircle}
-					title="Edit profile"
-					href="/user/profile"
-				/>
-				<SheetLink icon={Cog} title="edit settings" href="/user/settings" />
-				<SheetLink
-					icon={KeyRound}
-					title="change password"
-					href="/user/password"
-				/>
+				{sheetLinks.map((link, index) => (
+					<SheetLink
+						key={index}
+						icon={link.icon}
+						title={link.title}
+						href={link.href}
+					/>
+				))}
 				<SheetLink
 					icon={LogOut}
 					title="log out"
