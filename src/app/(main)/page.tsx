@@ -1,4 +1,5 @@
 "use client";
+import Info from "@/components/info";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,7 +12,6 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import {
-	TSyntax,
 	categories,
 	expirations,
 	exposures,
@@ -200,9 +200,8 @@ export default function Home() {
 						</div>
 					</div>
 				</div>
-				<div className="w-full border rounded-sm flex items-center justify-start p-2 text-sm gap-2 bg-bg font-extralight">
-					<InfoIcon />
-					<p>
+				<Info>
+					<span>
 						You are currently not logged in, this means you can not edit or
 						delete anything you paste.
 						<Link
@@ -218,8 +217,8 @@ export default function Home() {
 						>
 							Log in
 						</Link>
-					</p>
-				</div>
+					</span>
+				</Info>
 			</div>
 		</div>
 	);
