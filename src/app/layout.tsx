@@ -5,7 +5,7 @@ import { ThemeProvider } from "@/components/providers/theme-provider";
 import { cn } from "@/lib/utils";
 import Header from "./(main)/_components/header";
 import Footer from "./(main)/_components/footer";
-import PublicPastes from "./(main)/_components/public-pastes";
+import PublicPastes from "./(main)/_components/pastes";
 
 const font = Inter({ subsets: ["latin"] });
 

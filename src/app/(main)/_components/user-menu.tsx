@@ -1,6 +1,7 @@
 "use client";
 import {
 	Bell,
+	ChevronDown,
 	Cog,
 	KeyRound,
 	LogOut,
@@ -35,7 +36,7 @@ export default function UserMenu() {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild className="cursor-pointer">
-				<Menu size={35} />
+				<ChevronDown size={35} />
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className="p-0 w-[200px] text-sm flex flex-col items-center bg-[rgb(43,43,43)] justify-center">
 				<SheetLink icon={User} title="my pastebin" href={`/u/${userId}`} />
