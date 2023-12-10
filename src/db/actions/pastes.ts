@@ -2,7 +2,7 @@
 
 import { db } from "..";
 import { Paste, pastes } from "../schema/pastes";
-import { eq, sql } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { users } from "../schema/users";
 
 export async function create(paste: Paste): Promise<boolean> {

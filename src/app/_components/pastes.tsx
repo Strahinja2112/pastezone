@@ -4,12 +4,7 @@ import { Globe2 } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import { Paste } from "@/db/schema/pastes";
-import { create, getByUserId } from "@/db/actions/pastes";
-import { eq } from "drizzle-orm";
-import { users } from "@/db/schema/users";
 import { auth } from "@/auth";
-
-const myPastes: Paste[] = [];
 
 export default async function Pastes() {
 	const session = await auth();
