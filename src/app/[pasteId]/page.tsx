@@ -1,9 +1,7 @@
 import { auth } from "@/auth";
 import Info from "@/components/info";
 import { Button } from "@/components/ui/button";
-import { db } from "@/db";
 import { getByUserId } from "@/db/actions/pastes";
-import { users } from "@/db/schema/users";
 import Link from "next/link";
 import React from "react";
 
@@ -16,7 +14,7 @@ type Props = {
 export default async function PasteIdPage({ params }: Props) {
 	const session = await auth();
 
-	const all = await db.select().from(users);
+	const all = await getByUserId(session?.user?.id || "");
 
 	return (
 		<div className="w-full flex gap-3 flex-col items-center justify-center">
