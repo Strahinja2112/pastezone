@@ -40,7 +40,7 @@ export default function Home() {
 					cols={30}
 					rows={17}
 					className="bg-bg border-none focus:outline-none rounded-md text-sm p-2 w-full h-full resize-none"
-				></textarea>
+				/>
 			</div>
 			<div className="flex flex-col items-center w-full justify-start mt-1">
 				<h2 className="w-full text-lg border-b-2">Optional Paste Settings</h2>
