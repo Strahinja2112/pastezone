@@ -23,6 +23,7 @@ export const categories = [
 	"Travel",
 	"TV",
 	"Writing",
+	"None",
 ] as const;
 
 export const syntaxLanguages = [
@@ -36,9 +37,10 @@ export const syntaxLanguages = [
 	"Java",
 	"JavaScript",
 	"TypeScript",
+	"None",
 ] as const;
 
-export const exposures = ["Public", "Unlisted", "Private"] as const;
+export const exposures = ["Public", "Unlisted", "Private", "None"] as const;
 
 export const expirations = [
 	"Never",
@@ -51,6 +53,7 @@ export const expirations = [
 	"1 Month",
 	"6 Months",
 	"1 Year",
+	"None",
 ] as const;
 
 export type TCategory = (typeof categories)[number];
