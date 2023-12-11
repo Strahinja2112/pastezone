@@ -1,12 +1,10 @@
-"use server";
 import { db } from "..";
 import { Paste, pastes } from "../schema/pastes";
-import { eq } from "drizzle-orm";
 
-export async function create(paste: Paste): Promise<boolean> {
-	return true;
-}
-
-export async function getByUserId(userId: string): Promise<Paste[]> {
-	return await db.select().from(pastes).where(eq(pastes.userId, userId));
+export async function create(paste: Paste) {
+	try {
+		return (await db.insert(pastes).values(paste).returning())[0];
+	} catch {
+		return null;
+	}
 }

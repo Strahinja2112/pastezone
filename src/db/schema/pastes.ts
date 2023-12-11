@@ -3,6 +3,7 @@ import { createId } from "@paralleldrive/cuid2";
 import {
 	categories,
 	expirations,
+	exposures,
 	syntaxLanguages,
 } from "@/config/select-values";
 import { users } from "./users";
@@ -24,8 +25,13 @@ export const pastes = sqliteTable("pastes", {
 	expiration: text("expiration", {
 		enum: expirations,
 	}).notNull(),
+	exposure: text("exposure", {
+		enum: exposures,
+	})
+		.notNull()
+		.default("Public"),
 	createdAt: text("createdAt").default(sql`CURRENT_TIMESTAMP`),
-	password: text("password").notNull(),
+	password: text("password"),
 	title: text("title").notNull(),
 	content: text("content").notNull(),
 	size: text("size").notNull(),

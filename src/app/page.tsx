@@ -149,10 +149,8 @@ export default function Home() {
 								<Checkbox id="burnAfterRead" />
 								<Label htmlFor="burnAfterRead" className="cursor-pointer">
 									Burn after read
-									<span className="bg-red-500 ml-2 px-1 rounded-sm text-xs">
-										NEW
-									</span>
 								</Label>
+								<span className="bg-red-500 px-1 rounded-sm text-xs">NEW</span>
 							</div>
 						</div>
 						<div className="grid w-full py-2 grid-cols-3">

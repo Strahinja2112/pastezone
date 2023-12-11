@@ -1,8 +1,10 @@
 import { auth } from "@/auth";
 import Info from "@/components/info";
 import { Button } from "@/components/ui/button";
-import { getByUserId } from "@/db/actions/pastes";
+import { db } from "@/db";
+import { pastes } from "@/db/schema/pastes";
 import Link from "next/link";
+import { eq } from "drizzle-orm";
 import React from "react";
 
 type Props = {
@@ -14,11 +16,19 @@ type Props = {
 export default async function PasteIdPage({ params }: Props) {
 	const session = await auth();
 
-	const all = await getByUserId(session?.user?.id || "");
+	const [paste] = await db
+		.select()
+		.from(pastes)
+		.where(eq(pastes.id, params.pasteId));
+
+	if (!paste) {
+		// TODO MAKE IT PRETTIER
+		return <div>Couldnt be found! sorry</div>;
+	}
 
 	return (
 		<div className="w-full flex gap-3 flex-col items-center justify-center">
-			{params.pasteId}
+			<pre>{JSON.stringify(paste, null, 2)}</pre>
 			{!session || !session.user ? (
 				<>
 					<h2 className="w-full text-xl mt-7 mb-2">Add comment</h2>
