@@ -7,6 +7,7 @@ import Header from "./_components/header";
 import Pastes from "./_components/pastes";
 import Footer from "./_components/footer";
 import SessionProvider from "../components/providers/session-provider";
+import { Toaster } from "react-hot-toast";
 
 const font = Inter({
 	weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -45,6 +46,7 @@ export default function RootLayout({
 					font.className
 				)}
 			>
+				<Toaster />
 				<ThemeProvider
 					attribute="class"
 					forcedTheme="dark"

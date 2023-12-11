@@ -16,11 +16,12 @@ import Link from "next/link";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
+	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { User } from "next-auth";
 
 type TSheetLink = {
@@ -69,10 +70,12 @@ const sheetLinks: TSheetLink[] = [
 ];
 
 export default function UserMenu({ user }: { user: User }) {
+	const { status } = useSession();
+
 	return (
 		<DropdownMenu>
-			<DropdownMenuTrigger asChild className="cursor-pointer">
-				<div className="flex items-center gap-1.5 justify-center">
+			<DropdownMenuTrigger asChild>
+				<div className="flex items-center cursor-pointer gap-1.5 justify-center">
 					<div className="flex h-full flex-col items-end justify-start">
 						<h4 className="text-xs">{user.name}</h4>
 						<h6 className="text-[9px] text-muted-foreground">FREE</h6>
@@ -87,7 +90,7 @@ export default function UserMenu({ user }: { user: User }) {
 					<ChevronDown size={35} />
 				</div>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent className="p-0 w-[200px] text-sm flex flex-col items-center bg-[rgb(43,43,43)] justify-center">
+			<DropdownMenuContent className="p-0 w-[200px] border text-sm flex flex-col items-center bg-[rgb(37,37,37)] justify-center">
 				{sheetLinks.map((link, index) => (
 					<SheetLink
 						key={index}
@@ -101,10 +104,12 @@ export default function UserMenu({ user }: { user: User }) {
 					title="log out"
 					onClick={async () => await signOut()}
 				/>
-				<Separator />
-				{["api", "tools", "faq", "archive"].map((el) => (
-					<SheetLink key={el} title={el.toUpperCase()} href={`/${el}`} />
-				))}
+				<div className="lg:hidden w-full">
+					<Separator />
+					{["api", "tools", "faq", "archive"].map((el) => (
+						<SheetLink key={el} title={el.toUpperCase()} href={`/${el}`} />
+					))}
+				</div>
 			</DropdownMenuContent>
 		</DropdownMenu>
 	);
@@ -115,13 +120,17 @@ function SheetLink({ icon: Icon, title, href, onClick }: TSheetLink) {
 		<Link
 			onClick={onClick}
 			href={href || "#"}
-			className={cn(
-				"w-full gap-2 hover:bg-bg transition flex items-center justify-between p-2",
-				!Icon && "justify-end"
-			)}
+			className="w-full hover:bg-bg transition"
 		>
-			{Icon ? <Icon className="w-5 h-5" /> : null}
-			<span className="text-sm">{title.toUpperCase()}</span>
+			<DropdownMenuItem
+				className={cn(
+					"w-full cursor-pointer flex items-center justify-between p-2",
+					!Icon && "justify-end"
+				)}
+			>
+				{Icon ? <Icon className="w-5 h-5" /> : null}
+				<span className="text-sm">{title.toUpperCase()}</span>
+			</DropdownMenuItem>
 		</Link>
 	);
 }
