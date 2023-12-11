@@ -19,8 +19,11 @@ import {
 } from "@/config/select-values";
 import Link from "next/link";
 import UserSection from "./_components/user-section";
+import { useSession } from "next-auth/react";
 
 export default function Home() {
+	const { status } = useSession();
+
 	return (
 		<div className="flex-1 w-full flex flex-col gap-1.5 items-center justify-start">
 			<div className="w-full text-sm flex items-center justify-between pr-1">
@@ -37,7 +40,7 @@ export default function Home() {
 					cols={30}
 					rows={17}
 					className="bg-bg border-none focus:outline-none rounded-md text-sm p-2 w-full h-full resize-none"
-				></textarea>
+				/>
 			</div>
 			<div className="flex flex-col items-center w-full justify-start mt-1">
 				<h2 className="w-full text-lg border-b-2">Optional Paste Settings</h2>
@@ -171,25 +174,27 @@ export default function Home() {
 					</div>
 					<UserSection />
 				</div>
-				<Info>
-					<span>
-						You are currently not logged in, this means you can not edit or
-						delete anything you paste.
-						<Link
-							href="/sign-up"
-							className="mx-1 text-blue-300 transition hover:text-muted-foreground"
-						>
-							Sign Up
-						</Link>
-						<span className="mx-1">or</span>
-						<Link
-							href="/log-in"
-							className="mx-1 text-blue-300 transition hover:text-muted-foreground"
-						>
-							Log in
-						</Link>
-					</span>
-				</Info>
+				{status === "unauthenticated" ? (
+					<Info>
+						<span>
+							You are currently not logged in, this means you can not edit or
+							delete anything you paste.
+							<Link
+								href="/sign-up"
+								className="mx-1 text-blue-300 transition hover:text-muted-foreground"
+							>
+								Sign Up
+							</Link>
+							<span className="mx-1">or</span>
+							<Link
+								href="/log-in"
+								className="mx-1 text-blue-300 transition hover:text-muted-foreground"
+							>
+								Log in
+							</Link>
+						</span>
+					</Info>
+				) : null}
 			</div>
 		</div>
 	);

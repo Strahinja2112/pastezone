@@ -1,0 +1,27 @@
+{
+  "version": "5",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1702326176433,
+      "tag": "0000_tearful_silverclaw",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1702326413009,
+      "tag": "0001_short_wither",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1702326630682,
+      "tag": "0002_worried_dark_beast",
+      "breakpoints": true
+    }
+  ]
+}

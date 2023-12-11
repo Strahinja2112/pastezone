@@ -18,18 +18,22 @@ export default async function Pastes() {
 
 	return (
 		<div className="hidden lg:flex flex-col items-stretch justify-center w-[25%]">
-			<Link href="/archive" className="transition mb-1 hover:text-blue-300">
-				My Pastes
-			</Link>
-			{myPastes.length > 0 ? (
-				myPastes.map((paste, idx) => <Paste key={idx} {...paste} />)
-			) : (
-				<div className="flex border-t p-1 gap-2 text-sm text-muted-foreground">
-					<Globe2 className="text-muted-foreground h-5 w-5" />
-					<span>Nothing to see here yet...</span>
-				</div>
-			)}
-			<p className="my-3" />
+			{session?.user ? (
+				<>
+					<Link href="/archive" className="transition mb-1 hover:text-blue-300">
+						My Pastes
+					</Link>
+					{myPastes.length > 0 ? (
+						myPastes.map((paste, idx) => <Paste key={idx} {...paste} />)
+					) : (
+						<div className="flex border-t p-1 gap-2 text-sm text-muted-foreground">
+							<Globe2 className="text-muted-foreground h-5 w-5" />
+							<span>Nothing to see here yet...</span>
+						</div>
+					)}
+				</>
+			) : null}
+			<p className="my-1" />
 			<Link href="/archive" className="transition mb-1 hover:text-blue-300">
 				Public Pastes
 			</Link>
@@ -57,7 +61,7 @@ function Paste(paste: Paste) {
 					{paste.title}
 				</Link>
 				<div className="flex items-center gap-2 text-xs text-muted-foreground">
-					{paste.language} | {""} | {paste.size}
+					{paste.language} | {paste.category} | {paste.size}
 				</div>
 			</div>
 		</div>

@@ -6,12 +6,13 @@ import { Plus } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import UserMenu from "./user-menu";
 import { useSession } from "next-auth/react";
+import { Spinner } from "@/components/spinner";
 
 export default function Header() {
 	const { data: session, status } = useSession();
 
 	return (
-		<div className="w-full fixed top-0 z-[100] flex flex-col border-b items-center justify-start  bg-gradient-to-b from-[rgb(37,37,37)] to-[rgb(43,43,43)]">
+		<div className="w-full fixed top-0 z-[100] flex flex-col border-b items-center justify-start bg-gradient-to-b from-[rgb(37,37,37)] to-[rgb(43,43,43)]">
 			<div className="h-14 w-full p-1 max-w-[1340px] flex items-center justify-between">
 				<div className="gap-5 flex items-center justify-start">
 					<Link href="/" className="flex gap-1.5 items-center justify-center">
@@ -59,7 +60,7 @@ export default function Header() {
 						/>
 					</div>
 				</div>
-				{status === "loading" && <div>Loading...</div>}
+				{status === "loading" && <Spinner size="lg" />}
 				{status === "authenticated" && <UserMenu user={session.user!} />}
 				{status === "unauthenticated" && (
 					<div className="flex gap-3 pr-2">

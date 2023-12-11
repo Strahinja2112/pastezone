@@ -10,13 +10,5 @@ export async function create(paste: Paste): Promise<boolean> {
 }
 
 export async function getByUserId(userId: string): Promise<Paste[]> {
-	console.log(userId);
-
-	const result = await db
-		.select()
-		.from(pastes)
-		.where(eq(users.email, ""))
-		.all();
-
-	return [];
+	return await db.select().from(pastes).where(eq(pastes.userId, userId));
 }
