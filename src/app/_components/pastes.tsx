@@ -5,16 +5,20 @@ import Link from "next/link";
 import React from "react";
 import { Paste } from "@/db/schema/pastes";
 import { auth } from "@/auth";
+import { eq, ne } from "drizzle-orm";
 
 export default async function Pastes() {
 	const session = await auth();
 
-	const allPublicPastes = await db.select().from(pastes).all();
+	const allPublicPastes = await db
+		.select()
+		.from(pastes)
+		.where(ne(pastes.userId, session?.user?.id || ""));
 
-	// EQ DON'T WORK
-	const myPastes = (await db.select().from(pastes)).filter(
-		(paste) => paste.userId === session?.user!.id
-	);
+	const myPastes = await db
+		.select()
+		.from(pastes)
+		.where(eq(pastes.userId, session?.user?.id || ""));
 
 	return (
 		<div className="hidden lg:flex flex-col items-stretch justify-center w-[25%]">

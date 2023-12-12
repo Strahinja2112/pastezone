@@ -27,11 +27,9 @@ export const pastes = sqliteTable("pastes", {
 	}).notNull(),
 	exposure: text("exposure", {
 		enum: exposures,
-	})
-		.notNull()
-		.default("Public"),
+	}).notNull(),
 	createdAt: text("createdAt").default(sql`CURRENT_TIMESTAMP`),
-	password: text("password"),
+	password: text("password").notNull(),
 	title: text("title").notNull(),
 	content: text("content").notNull(),
 	size: text("size").notNull(),

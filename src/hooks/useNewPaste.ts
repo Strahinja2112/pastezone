@@ -1,21 +1,37 @@
 import { Paste } from "@/db/schema/pastes";
 import { create } from "zustand";
 
-type PasteWithFunctions = Paste & {};
+export type FilterKeysByType<T, U> = {
+	[K in keyof T]: T[K] extends U ? K : never;
+}[keyof T];
 
-export const useNewPasteStore = create<Paste>((set, get) => {
-	return {
-		category: "None",
-		content: "",
-		expiration: "Never",
-		language: "None",
-		title: "",
-		size: "",
-		tags: "",
-		createdAt: "",
-		exposure: "Public",
-		password: "",
-		id: "",
-		userId: "",
-	};
-});
+type TStrings = FilterKeysByType<TNewPasteStore, string>;
+
+type TNewPasteStore = Paste & {
+	setProp(name: TStrings, value: string): void;
+};
+
+export const useNewPasteStore = create<TNewPasteStore>((set) => ({
+	id: undefined,
+	category: "None",
+	content: "",
+	expiration: "Never",
+	language: "None",
+	title: "",
+	size: "",
+	tags: "",
+	createdAt: "",
+	exposure: "Public",
+	password: "",
+	userId: "",
+	setProp(name: TStrings, value: string) {
+		if (!name) {
+			console.log("NAME IS NOT BEING SET!");
+			return;
+		}
+
+		set({
+			[name]: value,
+		});
+	},
+}));
