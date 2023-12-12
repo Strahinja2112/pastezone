@@ -4,7 +4,7 @@ import { db } from "@/db";
 import { getTextSize } from "@/lib/utils";
 import bcrypt from "bcrypt";
 
-export type TCreateNewPasteRet =
+export type TCreateNewPasteReturn =
 	| {
 			success: true;
 			new: Paste;
@@ -19,31 +19,26 @@ export async function POST(req: NextRequest) {
 	try {
 		const paste: Paste = await req.json();
 
-		const passHash = await hashPassword("password");
+		const password = await bcrypt.hash(paste.password, 13);
 
-		// const [newPaste] = await db
-		// 	.insert(pastes)
-		// 	.values({
-		// 		...paste,
-		// 		size: getTextSize(paste.content),
-		// 	})
-		// 	.returning();
+		const [newPaste] = await db
+			.insert(pastes)
+			.values({
+				...paste,
+				password,
+				size: getTextSize(paste.content),
+			})
+			.returning();
 
-		return NextResponse.json<TCreateNewPasteRet>({
+		return NextResponse.json<TCreateNewPasteReturn>({
 			success: true,
-			new: paste,
+			new: newPaste,
 		});
 	} catch {
-		return NextResponse.json<TCreateNewPasteRet>({
+		return NextResponse.json<TCreateNewPasteReturn>({
 			success: false,
 			error: "Could not create paste!",
 			status: 400,
 		});
 	}
-}
-
-async function hashPassword(plainText: string) {
-	const hash = await bcrypt.hash(plainText, 10);
-
-	console.log(hash);
 }

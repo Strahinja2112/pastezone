@@ -17,7 +17,7 @@ import {
 import { useNewPasteStore } from "@/hooks/useNewPaste";
 import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
-import { TCreateNewPasteRet } from "../api/pastes/create/route";
+import { TCreateNewPasteReturn } from "../api/pastes/create/route";
 import { useRouter } from "next/navigation";
 import { generateRandomPassword } from "@/lib/utils";
 import { useRef } from "react";
@@ -34,6 +34,7 @@ export default function PasteSettings({}: Props) {
 
 	async function create() {
 		try {
+			toast("Creating a new paste!");
 			const res = await fetch("/api/pastes/create", {
 				method: "POST",
 				headers: {
@@ -45,7 +46,7 @@ export default function PasteSettings({}: Props) {
 				}),
 			});
 
-			const data: TCreateNewPasteRet = await res.json();
+			const data: TCreateNewPasteReturn = await res.json();
 
 			if (data.success) {
 				toast.success("New paste has been added!");

@@ -10,15 +10,16 @@ import { eq, ne } from "drizzle-orm";
 export default async function Pastes() {
 	const session = await auth();
 
-	const allPublicPastes = await db
-		.select()
-		.from(pastes)
-		.where(ne(pastes.userId, session?.user?.id || ""));
-
-	const myPastes = await db
-		.select()
-		.from(pastes)
-		.where(eq(pastes.userId, session?.user?.id || ""));
+	const [allPublicPastes, myPastes] = await Promise.all([
+		db
+			.select()
+			.from(pastes)
+			.where(ne(pastes.userId, session?.user?.id || "")),
+		db
+			.select()
+			.from(pastes)
+			.where(eq(pastes.userId, session?.user?.id || "")),
+	]);
 
 	return (
 		<div className="hidden lg:flex flex-col items-stretch justify-center w-[25%]">
@@ -62,7 +63,7 @@ function Paste(paste: Paste) {
 					href={`/${paste.id}`}
 					className="text-blue-300 transition hover:text-muted-foreground"
 				>
-					{paste.title}
+					{paste.title || "Untitled"}
 				</Link>
 				<div className="flex items-center gap-2 text-xs text-muted-foreground">
 					{paste.language} | {paste.category} | {paste.size}
