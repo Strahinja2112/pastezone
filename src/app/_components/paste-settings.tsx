@@ -50,7 +50,7 @@ export default function PasteSettings({}: Props) {
 			if (data.success) {
 				toast.success("New paste has been added!");
 				router.refresh();
-				router.replace(`/${data.new.id}`);
+				// router.replace(`/${data.new.id}`);
 			} else {
 				toast.error(`Could not create paste! error: ${data.error}`);
 			}

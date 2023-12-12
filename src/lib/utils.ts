@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import bcrypt from "bcrypt";
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
@@ -29,3 +30,5 @@ export function getTextSize(text: string): string {
 		return `${(byteSize / (1024 * 1024)).toFixed(2)} MB`;
 	}
 }
+
+export function checkHashedPassword() {}

@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { pastes, type Paste } from "@/db/schema/pastes";
 import { db } from "@/db";
 import { getTextSize } from "@/lib/utils";
+import bcrypt from "bcrypt";
+
 export type TCreateNewPasteRet =
 	| {
 			success: true;
@@ -16,21 +18,20 @@ export type TCreateNewPasteRet =
 export async function POST(req: NextRequest) {
 	try {
 		const paste: Paste = await req.json();
-		delete paste.id;
 
-		const fileSize = getTextSize(paste.content);
+		const passHash = await hashPassword("password");
 
-		const [newPaste] = await db
-			.insert(pastes)
-			.values({
-				...paste,
-				size: fileSize,
-			})
-			.returning();
+		// const [newPaste] = await db
+		// 	.insert(pastes)
+		// 	.values({
+		// 		...paste,
+		// 		size: getTextSize(paste.content),
+		// 	})
+		// 	.returning();
 
 		return NextResponse.json<TCreateNewPasteRet>({
 			success: true,
-			new: newPaste,
+			new: paste,
 		});
 	} catch {
 		return NextResponse.json<TCreateNewPasteRet>({
@@ -39,4 +40,10 @@ export async function POST(req: NextRequest) {
 			status: 400,
 		});
 	}
+}
+
+async function hashPassword(plainText: string) {
+	const hash = await bcrypt.hash(plainText, 10);
+
+	console.log(hash);
 }
