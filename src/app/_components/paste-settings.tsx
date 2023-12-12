@@ -35,7 +35,7 @@ export default function PasteSettings({}: Props) {
 	async function create() {
 		try {
 			toast("Creating a new paste!");
-			const res = await fetch("/api/pastes/", {
+			const res = await fetch("/api/pastes", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",

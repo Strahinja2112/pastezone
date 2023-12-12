@@ -4,8 +4,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Paste } from "@/db/schema/pastes";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
+import useOrigin from "@/hooks/useOrigin";
 
 type Props = {
 	paste: Paste;
@@ -15,6 +17,9 @@ type Props = {
 export default function UnlockPaste({ paste, onUnlock }: Props) {
 	const [wrongPasswordEntered, setWrongPasswordEntered] = useState(false);
 	const [password, setPassword] = useState("");
+
+	const pathName = usePathname();
+	const origin = useOrigin();
 
 	async function tryPassword() {
 		toast("Checking password!");
@@ -67,7 +72,15 @@ export default function UnlockPaste({ paste, onUnlock }: Props) {
 						>
 							Unlock the paste
 						</Button>
-						<Button variant="pastebin" size="sm" className="w-full">
+						<Button
+							variant="pastebin"
+							size="sm"
+							className="w-full"
+							onClick={() => {
+								navigator.clipboard.writeText(origin + pathName);
+								toast.success("Paste link copied to clipboard!");
+							}}
+						>
 							Copy paste link to clipboard
 						</Button>
 					</div>
