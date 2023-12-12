@@ -19,7 +19,8 @@ export async function POST(req: NextRequest) {
 	try {
 		const paste: Paste = await req.json();
 
-		const password = await bcrypt.hash(paste.password, 13);
+		const password =
+			paste.password !== "" ? await bcrypt.hash(paste.password, 13) : "";
 
 		const [newPaste] = await db
 			.insert(pastes)

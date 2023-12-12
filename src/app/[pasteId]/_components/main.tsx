@@ -13,9 +13,9 @@ type Props = {
 };
 
 export default function Main({ paste, session }: Props) {
-	const [isLocked, setIsLocked] = useState(!!paste.password);
+	const [isLocked, setIsLocked] = useState(paste.password !== "");
 
-	if (isLocked) {
+	if (paste.userId !== session?.user?.id && isLocked) {
 		return <UnlockPaste paste={paste} onUnlock={() => setIsLocked(false)} />;
 	}
 

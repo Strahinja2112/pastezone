@@ -21,12 +21,12 @@ const buttonVariants = cva(
 				green:
 					"bg-[rgb(97,186,101)] text-primary-foreground text-white hover:bg-[rgb(97,186,101)]",
 				pastebin:
-					"p-1 px-2 rounded-[3px] border-b-2 bg-[rgb(43,43,43)] transition hover:text-muted-foreground",
+					"p-1 px-2 border-b-2 bg-[rgb(43,43,43)] transition hover:text-muted-foreground",
 			},
 			size: {
 				default: "h-10 px-4 py-2",
-				sm: "h-9 rounded-md px-3",
-				lg: "h-11 rounded-md px-8",
+				sm: "h-9 px-3",
+				lg: "h-11 px-8",
 				icon: "h-10 w-10",
 				tiny: "h-7 text-xs px-2",
 			},
