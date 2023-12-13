@@ -9,6 +9,7 @@ import UnlockPaste from "./unlock-paste";
 import BurnAfterRead from "./burn-after-read";
 import { Flame } from "lucide-react";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 type Props = {
 	paste: Paste;
@@ -19,17 +20,15 @@ export default function Main({ paste, session }: Props) {
 	const [isLocked, setIsLocked] = useState(!!paste.password);
 	const [shouldBurnAfterRead, setShouldBurnAfterRead] = useState(false);
 
+	const router = useRouter();
+
 	useEffect(() => {
 		async function deletePaste() {
-			const res = await fetch(`/api/pastes?id=${paste.id}`, {
+			await fetch(`/api/pastes?id=${paste.id}`, {
 				method: "DELETE",
 			});
 
-			const data = await res.json();
-
-			if (data.success) {
-				toast.success(data.message);
-			}
+			router.refresh();
 		}
 
 		return () => {
@@ -37,7 +36,7 @@ export default function Main({ paste, session }: Props) {
 				deletePaste();
 			}
 		};
-	}, [paste.id, shouldBurnAfterRead]);
+	}, [paste.id, router, shouldBurnAfterRead]);
 
 	if (paste.userId !== session?.user?.id || true) {
 		if (isLocked) {
