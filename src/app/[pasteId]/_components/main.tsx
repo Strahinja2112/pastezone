@@ -4,8 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Paste } from "@/db/schema/pastes";
 import { Session } from "next-auth";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import UnlockPaste from "./unlock-paste";
+import BurnAfterRead from "./burn-after-read";
+import { Flame } from "lucide-react";
+import toast from "react-hot-toast";
 
 type Props = {
 	paste: Paste;
@@ -14,14 +17,59 @@ type Props = {
 
 export default function Main({ paste, session }: Props) {
 	const [isLocked, setIsLocked] = useState(!!paste.password);
+	const [shouldBurnAfterRead, setShouldBurnAfterRead] = useState(false);
 
-	if (paste.userId !== session?.user?.id && isLocked) {
-		return <UnlockPaste paste={paste} onUnlock={() => setIsLocked(false)} />;
+	useEffect(() => {
+		async function deletePaste() {
+			const res = await fetch(`/api/pastes?id=${paste.id}`, {
+				method: "DELETE",
+			});
+
+			const data = await res.json();
+
+			if (data.success) {
+				toast.success(data.message);
+			}
+		}
+
+		return () => {
+			if (shouldBurnAfterRead) {
+				deletePaste();
+			}
+		};
+	}, [paste.id, shouldBurnAfterRead]);
+
+	if (paste.userId !== session?.user?.id || true) {
+		if (isLocked) {
+			return <UnlockPaste paste={paste} onUnlock={() => setIsLocked(false)} />;
+		}
+		if (paste.expiration === "Burn after read" && !shouldBurnAfterRead) {
+			return (
+				<BurnAfterRead
+					paste={paste}
+					onClick={() => setShouldBurnAfterRead(true)}
+				/>
+			);
+		}
 	}
 
 	return (
 		<div className="w-full flex gap-3 flex-col items-center justify-center">
-			<pre>{JSON.stringify(paste, null, 2)}</pre>
+			{shouldBurnAfterRead && (
+				<Info
+					icon={
+						<Flame className="w-8 h-8 text-muted-foreground text-red-600" />
+					}
+					className="border-red-500"
+				>
+					<p className="text-sm">
+						<span className="text-red-500">Burn After Read.</span> Paste was
+						created for your eyes only. When this paste is closed there will be
+						<span className="text-red-500"> no way </span>to recover or view it
+						again!
+					</p>
+				</Info>
+			)}
 			{isLocked.toString()}
 			{!session || !session.user ? (
 				<>

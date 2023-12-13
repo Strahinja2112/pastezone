@@ -3,9 +3,9 @@ import { pastes } from "@/db/schema/pastes";
 import { Globe2 } from "lucide-react";
 import Link from "next/link";
 import React from "react";
-import { Paste } from "@/db/schema/pastes";
 import { auth } from "@/auth";
 import { eq, ne } from "drizzle-orm";
+import PasteCard from "@/components/paste-card";
 
 export default async function Pastes() {
 	const session = await auth();
@@ -29,7 +29,7 @@ export default async function Pastes() {
 						My Pastes
 					</Link>
 					{myPastes.length > 0 ? (
-						myPastes.map((paste, idx) => <Paste key={idx} {...paste} />)
+						myPastes.map((paste, idx) => <PasteCard key={idx} {...paste} />)
 					) : (
 						<div className="flex border-t p-1 gap-2 text-sm text-muted-foreground">
 							<Globe2 className="text-muted-foreground h-5 w-5" />
@@ -43,32 +43,13 @@ export default async function Pastes() {
 				Public Pastes
 			</Link>
 			{allPublicPastes.length > 0 ? (
-				allPublicPastes.map((paste, idx) => <Paste key={idx} {...paste} />)
+				allPublicPastes.map((paste, idx) => <PasteCard key={idx} {...paste} />)
 			) : (
 				<div className="flex gap-2 text-sm text-muted-foreground">
 					<Globe2 className="text-muted-foreground h-5 w-5" />
 					<span>Nothing to see here yet...</span>
 				</div>
 			)}
-		</div>
-	);
-}
-
-function Paste(paste: Paste) {
-	return (
-		<div className="border-t p-1 flex items-start justify-start gap-2">
-			<Globe2 className="text-muted-foreground h-5 w-5" />
-			<div className="flex text-sm w-full flex-col items-start justify-center">
-				<Link
-					href={`/${paste.id}`}
-					className="text-blue-300 transition hover:text-muted-foreground"
-				>
-					{paste.title || "Untitled"}
-				</Link>
-				<div className="flex items-center gap-2 text-xs text-muted-foreground">
-					{paste.language} | {paste.category} | {paste.size}
-				</div>
-			</div>
 		</div>
 	);
 }

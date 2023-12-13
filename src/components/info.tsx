@@ -1,20 +1,26 @@
 import { cn } from "@/lib/utils";
-import { InfoIcon } from "lucide-react";
-import React, { PropsWithChildren } from "react";
+import { InfoIcon, LucideIcon } from "lucide-react";
+import React, { PropsWithChildren, ReactNode } from "react";
+
+type Props = {
+	className?: string;
+	icon?: ReactNode;
+};
 
 export default function Info({
 	children,
 	className,
-}: PropsWithChildren<{ className?: string }>) {
+	icon,
+}: PropsWithChildren<Props>) {
 	return (
 		<div
 			className={cn(
-				"w-full border rounded-sm flex items-center justify-start p-2 text-sm gap-2 bg-bg font-extralight",
+				"w-full border rounded-sm flex items-start justify-start p-2 text-sm gap-2 bg-bg font-light",
 				className
 			)}
 		>
 			<div className="w-[35px]">
-				<InfoIcon className="w-8 h-8 text-muted-foreground" />
+				{icon ? icon : <InfoIcon className="w-8 h-8 text-muted-foreground" />}
 			</div>
 			{children}
 		</div>
