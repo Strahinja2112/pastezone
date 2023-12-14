@@ -9,6 +9,7 @@ import UnlockPaste from "./unlock-paste";
 import BurnAfterRead from "./burn-after-read";
 import {
 	Calendar,
+	Copy,
 	Eye,
 	Facebook,
 	Flame,
@@ -22,6 +23,8 @@ import {
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { formatDateString } from "@/lib/utils";
+import toast from "react-hot-toast";
+import PasteEditor from "./paste-editor";
 
 type Props = {
 	paste: Paste;
@@ -35,6 +38,7 @@ export default function Main({ paste, session, user }: Props) {
 
 	const router = useRouter();
 	const addCommentRef = useRef<HTMLTextAreaElement | null>(null);
+	const rawPasteRef = useRef<HTMLTextAreaElement | null>(null);
 
 	useEffect(() => {
 		async function deletePaste() {
@@ -133,19 +137,55 @@ export default function Main({ paste, session, user }: Props) {
 					</div>
 				</div>
 				<div className="flex items-center justify-center gap-1 flex-col">
-					<button className="bg-[rgb(59,89,152)] flex items-center justify-center gap-1 rounded-sm text-xs p-1 pr-1.5">
+					<button className="bg-[rgb(59,89,152)] w-[80px] flex items-center justify-center gap-1 rounded-sm text-xs p-1 pr-1.5">
 						<Facebook fill="white" className="w-4 h-4" />
 						<span>SHARE</span>
 					</button>
-					<button className="bg-[rgb(85,172,238)] flex items-center justify-center gap-1 rounded-sm text-xs p-1 pr-1.5">
+					<button className="bg-[rgb(85,172,238)] w-[80px] flex items-center justify-center gap-1 rounded-sm text-xs p-1 pr-1.5">
 						<Twitter fill="white" className="w-4 h-4" />
 						<span>TWEET</span>
 					</button>
 				</div>
 			</div>
 			{!session || !session.user ? (
+				<Info>
+					<b>Not a member of Pastebin yet?</b>{" "}
+					<Link href="/api/auth/signin" className="text-blue-300 underline">
+						Sign Up,
+					</Link>
+					it unlocks many cool features!
+				</Info>
+			) : null}
+			<PasteEditor user={user} paste={paste} />
+			<div className="w-full flex gap-2 flex-col items-start justify-start">
+				<div className="flex items-center justify-center gap-2">
+					<h1>RAW Paste Data</h1>
+					<Copy
+						className="w-5 h-5 cursor-pointer"
+						onClick={() => {
+							const text = rawPasteRef.current?.value;
+							if (!text) {
+								toast.error("There could not be anyting to copy from!");
+							} else {
+								navigator.clipboard.writeText(text);
+								toast.success("Text was copied successfully!");
+							}
+						}}
+					/>
+				</div>
+				<textarea
+					ref={rawPasteRef}
+					name=""
+					id=""
+					rows={4}
+					className="bg-bg border-none focus:outline-none rounded-md text-sm p-3 w-full h-full resize-y"
+					value={paste.content}
+					readOnly
+				/>
+			</div>
+			{!session || !session.user ? (
 				<>
-					<h2 className="w-full text-xl mt-7 mb-2">Add comment</h2>
+					<h2 className="w-full text-xl mb-2">Add comment</h2>
 					<Info>
 						<p>
 							Please,{" "}
@@ -158,7 +198,7 @@ export default function Main({ paste, session, user }: Props) {
 				</>
 			) : (
 				<>
-					<h2 className="w-full text-xl mt-7">Your comment</h2>
+					<h2 className="w-full text-xl">Your comment</h2>
 					<textarea
 						ref={addCommentRef}
 						name=""

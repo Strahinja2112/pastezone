@@ -15,14 +15,14 @@ export default function Info({
 	return (
 		<div
 			className={cn(
-				"w-full border rounded-sm flex items-start justify-start p-2 text-sm gap-2 bg-bg font-light",
+				"w-full border rounded-sm flex items-center justify-start p-2 text-sm gap-2 bg-bg font-light",
 				className
 			)}
 		>
 			<div className="w-[35px]">
 				{icon ? icon : <InfoIcon className="w-8 h-8 text-muted-foreground" />}
 			</div>
-			{children}
+			<div className="w-full">{children}</div>
 		</div>
 	);
 }
