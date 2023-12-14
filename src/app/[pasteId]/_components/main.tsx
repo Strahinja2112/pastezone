@@ -87,7 +87,7 @@ export default function Main({ paste, session, user }: Props) {
 					</p>
 				</Info>
 			)}
-			<div className="w-full flex gap-3">
+			<header className="w-full flex gap-3">
 				<Image
 					src={user.image || "/guest-dark.png"}
 					alt="user"
@@ -146,7 +146,7 @@ export default function Main({ paste, session, user }: Props) {
 						<span>TWEET</span>
 					</button>
 				</div>
-			</div>
+			</header>
 			{!session || !session.user ? (
 				<Info>
 					<b>Not a member of Pastebin yet?</b>{" "}

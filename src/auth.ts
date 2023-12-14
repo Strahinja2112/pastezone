@@ -7,6 +7,7 @@ declare module "@auth/core" {
 	interface Session {
 		user: {
 			id: string;
+			createdAt: string;
 		} & DefaultSession["user"];
 	}
 }
