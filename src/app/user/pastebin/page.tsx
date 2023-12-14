@@ -21,7 +21,7 @@ export default async function MyPasteBin() {
 		.from(pastes)
 		.where(eq(pastes.userId, user.id));
 
-	const active = allPastes.lenght;
+	const active = allPastes.length;
 
 	return (
 		<div className="w-full pt-1 flex gap-3 flex-col items-center justify-center">
