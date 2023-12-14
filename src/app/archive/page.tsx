@@ -1,15 +1,18 @@
 import Info from "@/components/info";
-import PasteCard from "@/components/paste-card";
 import { db } from "@/db";
 import { pastes } from "@/db/schema/pastes";
 import { eq } from "drizzle-orm";
-import React from "react";
+import PasteCard from "./_components/paste-card";
 
 export default async function ArchivePage() {
-	const allPastes = await db
-		.select()
-		.from(pastes)
-		.where(eq(pastes.exposure, "Public"));
+	// ! NIJE NAJBOLJE RESENJE AL AJ
+	const allPastes = (
+		await db
+			.select()
+			.from(pastes)
+			.where(eq(pastes.exposure, "Public"))
+			.orderBy(pastes.createdAt)
+	).reverse();
 
 	return (
 		<div className="w-full flex flex-col items-center">
@@ -20,9 +23,20 @@ export default async function ArchivePage() {
 					pastes.
 				</span>
 			</Info>
-			{allPastes.map((paste) => (
-				<PasteCard key={paste.id} {...paste} />
-			))}
+			<div className="flex flex-col items-center justify-center w-full">
+				<div className="p-1 hover:bg-bg border-b transition-all text-sm py-2  flex items-start justify-start gap-2 w-full">
+					<div className="w-full sm:w-[65%]">NAME/TITLE</div>
+					<div className="hidden sm:flex w-[20%]">
+						<span className="w-full text-end">POSTED</span>
+					</div>
+					<div className="hidden sm:flex w-[15%] text-end">
+						<span className="w-full text-end">SYNTAX</span>
+					</div>
+				</div>
+				{allPastes.map((paste, idx) => (
+					<PasteCard key={idx} {...paste} />
+				))}
+			</div>
 		</div>
 	);
 }

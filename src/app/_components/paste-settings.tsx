@@ -13,7 +13,7 @@ import {
 	expirations,
 	exposures,
 	syntaxLanguages,
-} from "@/config/select-values";
+} from "@/config/constants";
 import { useNewPasteStore } from "@/hooks/useNewPaste";
 import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";

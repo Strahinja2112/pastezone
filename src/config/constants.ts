@@ -1,3 +1,7 @@
+type SyntaxRecord = {
+	[key in (typeof syntaxLanguages)[number]]: string;
+};
+
 export const categories = [
 	"Cryptocurrency",
 	"Cybersecurity",
@@ -29,7 +33,7 @@ export const categories = [
 export const syntaxLanguages = [
 	"Bash",
 	"C",
-	"C#",
+	"CSharp",
 	"C++",
 	"CSS",
 	"HTML",
@@ -39,6 +43,20 @@ export const syntaxLanguages = [
 	"TypeScript",
 	"None",
 ] as const;
+
+export const languageExtensions: SyntaxRecord = {
+	Bash: ".sh",
+	C: ".c",
+	CSharp: ".cs",
+	"C++": ".cpp",
+	CSS: ".css",
+	HTML: ".html",
+	JSON: ".json",
+	Java: ".java",
+	JavaScript: ".js",
+	TypeScript: ".ts",
+	None: ".txt",
+};
 
 export const exposures = ["Public", "Unlisted", "Private", "None"] as const;
 

@@ -1,3 +1,4 @@
+import { languageExtensions } from "@/config/constants";
 import { Paste } from "@/db/schema/pastes";
 import { cn } from "@/lib/utils";
 import { ThumbsDown, ThumbsUp } from "lucide-react";
@@ -56,14 +57,25 @@ export default function PasteEditor({ user, paste }: Props) {
 					>
 						copy
 					</button>
-					<button
-						onClick={() => {}}
+					<Link
+						href={`/raw/${paste.id}`}
 						className="bg-black/20 p-1 px-1.5 rounded-sm text-blue-300/75 transition hover:text-muted-foreground"
 					>
 						raw
-					</button>
+					</Link>
 					<button
-						onClick={() => {}}
+						onClick={() => {
+							const extenstion = languageExtensions[paste.language];
+							const blob = new Blob([paste.content], {
+								type: `text/${extenstion}`,
+							});
+							const url = URL.createObjectURL(blob);
+							const a = document.createElement("a");
+							a.href = url;
+							a.download = paste.title + extenstion;
+							a.click();
+							URL.revokeObjectURL(url);
+						}}
 						className="bg-black/20 p-1 px-1.5 rounded-sm text-blue-300/75 transition hover:text-muted-foreground"
 					>
 						download

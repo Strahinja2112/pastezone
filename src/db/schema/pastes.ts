@@ -5,7 +5,7 @@ import {
 	expirations,
 	exposures,
 	syntaxLanguages,
-} from "@/config/select-values";
+} from "@/config/constants";
 import { users } from "./users";
 import { InferInsertModel, sql } from "drizzle-orm";
 

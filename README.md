@@ -1,36 +1,41 @@
+# PasteZone
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+## Overview
+
+This project is a full-stack clone of [pastebin.com](http://pastebin.com). It replicates Pastebin's functionality and adds several impressive features to enhance user experience.
+
+## Key Features
+
+- **Syntax Highlighting**: Implemented syntax highlighting for various programming languages using [highlight.js](https://highlightjs.org/).
+- **Expiration Options**: Users can set expiration times for their pastes, with multiple time options.
+- **Enhanced UI/UX**: Tailwind CSS and Shadcn-UI were combined to create an intuitive and visually appealing user interface.
+- **Code Line Numbers**: Line numbers are displayed alongside code snippets for easy reference.
+- **User Authentication**: Integrated NextAuth.js to enable user authentication and secure access to private pastes.
+- **Advanced Search Functionality**: Users can search through their pastes based on content, language, or expiration status.
 
 ## Getting Started
 
-First, run the development server:
+To run this project locally, follow these steps:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. Clone the repository.
+2. Install dependencies using `npm install`.
+3. Run the development server using `npm run dev`.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Technologies Used
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Next.js v14.0.4
+- Tailwind CSS
+- Shadcn-UI
+- NextAuth.js
+- highlight.js
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Contributions
 
-## Learn More
+This project is a personal endeavor and has been fully developed by me. Contributions are not currently accepted.
 
-To learn more about Next.js, take a look at the following resources:
+## License
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+This project is licensed under the [MIT License](LICENSE).

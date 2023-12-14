@@ -1,5 +1,9 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import TimeAgo from "javascript-time-ago";
+import en from "javascript-time-ago/locale/en";
+
+TimeAgo.addDefaultLocale(en);
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
@@ -40,4 +44,8 @@ export function formatDateString(dateString: string): string {
 	}).format(date);
 
 	return `${formattedDate.toUpperCase()}`;
+}
+
+export function timeAgo(dateString: string): string {
+	return new TimeAgo("en-US").format(new Date(dateString));
 }
