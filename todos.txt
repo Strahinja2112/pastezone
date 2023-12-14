@@ -1,3 +1,0 @@
-1. add burn after read
-2. add custom signin page
-3. add not found page (public/ not-found.png)

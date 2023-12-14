@@ -2,23 +2,24 @@
 import Info from "@/components/info";
 import { Button } from "@/components/ui/button";
 import { Paste } from "@/db/schema/pastes";
-import { Session } from "next-auth";
+import { Session, User } from "next-auth";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import UnlockPaste from "./unlock-paste";
 import BurnAfterRead from "./burn-after-read";
 import { Flame } from "lucide-react";
-import toast from "react-hot-toast";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 type Props = {
 	paste: Paste;
 	session: Session | null;
+	user: User;
 };
 
 export default function Main({ paste, session }: Props) {
 	const [isLocked, setIsLocked] = useState(!!paste.password);
-	const [shouldBurnAfterRead, setShouldBurnAfterRead] = useState(false);
+	const [userAgreedToBurn, setUserAgreedToBurn] = useState(false);
 
 	const router = useRouter();
 
@@ -32,21 +33,21 @@ export default function Main({ paste, session }: Props) {
 		}
 
 		return () => {
-			if (shouldBurnAfterRead) {
+			if (userAgreedToBurn) {
 				deletePaste();
 			}
 		};
-	}, [paste.id, router, shouldBurnAfterRead]);
+	}, [paste.id, router, userAgreedToBurn]);
 
 	if (paste.userId !== session?.user?.id || true) {
 		if (isLocked) {
 			return <UnlockPaste paste={paste} onUnlock={() => setIsLocked(false)} />;
 		}
-		if (paste.expiration === "Burn after read" && !shouldBurnAfterRead) {
+		if (paste.expiration === "Burn after read" && !userAgreedToBurn) {
 			return (
 				<BurnAfterRead
 					paste={paste}
-					onClick={() => setShouldBurnAfterRead(true)}
+					onClick={() => setUserAgreedToBurn(true)}
 				/>
 			);
 		}
@@ -54,7 +55,7 @@ export default function Main({ paste, session }: Props) {
 
 	return (
 		<div className="w-full flex gap-3 flex-col items-center justify-center">
-			{shouldBurnAfterRead && (
+			{paste.expiration === "Burn after read" && (
 				<Info
 					icon={
 						<Flame className="w-8 h-8 text-muted-foreground text-red-600" />
@@ -69,7 +70,7 @@ export default function Main({ paste, session }: Props) {
 					</p>
 				</Info>
 			)}
-			{isLocked.toString()}
+			<div className="w-full flex">{/* <Image src={paste} /> */}</div>
 			{!session || !session.user ? (
 				<>
 					<h2 className="w-full text-xl mt-7 mb-2">Add comment</h2>

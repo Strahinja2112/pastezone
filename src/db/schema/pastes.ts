@@ -14,7 +14,9 @@ export const pastes = sqliteTable("pastes", {
 		.$defaultFn(() => createId())
 		.primaryKey(),
 	// TODO: MAKE THIS BE WITH GUEST ALSO
-	userId: text("userId").references(() => users.id),
+	userId: text("userId")
+		.references(() => users.id)
+		.notNull(),
 	category: text("category", {
 		enum: categories,
 	}).notNull(),
