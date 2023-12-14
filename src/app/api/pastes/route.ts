@@ -29,8 +29,11 @@ export async function POST(req: NextRequest) {
 				...paste,
 				password,
 				size: getTextSize(paste.content),
+				createdAt: new Date().toUTCString(),
 			})
 			.returning();
+
+		console.log({ newPaste });
 
 		return NextResponse.json<TCreateNewPasteReturn>({
 			success: true,

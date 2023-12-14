@@ -4,12 +4,24 @@ import { Button } from "@/components/ui/button";
 import { Paste } from "@/db/schema/pastes";
 import { Session, User } from "next-auth";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import UnlockPaste from "./unlock-paste";
 import BurnAfterRead from "./burn-after-read";
-import { Flame } from "lucide-react";
+import {
+	Calendar,
+	Eye,
+	Facebook,
+	Flame,
+	MessageSquare,
+	Star,
+	Timer,
+	Twitter,
+	UserCircle,
+	UserIcon,
+} from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { formatDateString } from "@/lib/utils";
 
 type Props = {
 	paste: Paste;
@@ -17,11 +29,12 @@ type Props = {
 	user: User;
 };
 
-export default function Main({ paste, session }: Props) {
+export default function Main({ paste, session, user }: Props) {
 	const [isLocked, setIsLocked] = useState(!!paste.password);
 	const [userAgreedToBurn, setUserAgreedToBurn] = useState(false);
 
 	const router = useRouter();
+	const addCommentRef = useRef<HTMLTextAreaElement | null>(null);
 
 	useEffect(() => {
 		async function deletePaste() {
@@ -54,7 +67,7 @@ export default function Main({ paste, session }: Props) {
 	}
 
 	return (
-		<div className="w-full flex gap-3 flex-col items-center justify-center">
+		<div className="w-full pt-1 flex gap-3 flex-col items-center justify-center">
 			{paste.expiration === "Burn after read" && (
 				<Info
 					icon={
@@ -70,7 +83,66 @@ export default function Main({ paste, session }: Props) {
 					</p>
 				</Info>
 			)}
-			<div className="w-full flex">{/* <Image src={paste} /> */}</div>
+			<div className="w-full flex gap-3">
+				<Image
+					src={user.image || "/guest-dark.png"}
+					alt="user"
+					width={50}
+					height={50}
+					className="p-[2px] border"
+				/>
+				<div className="w-full text-sm flex flex-col items-start justify-between py-0.5">
+					<h1 className="text-[18px]">{paste.title}</h1>
+					<div className="flex gap-2 items-center justify-center text-[12px]">
+						<div className="flex gap-[3px] items-center justify-center">
+							<UserCircle className="w-5 h-4" />
+							<Link
+								href={`/user/${user.id}`}
+								className="uppercase text-blue-300 transition hover:text-muted-foreground"
+							>
+								{user.name}
+							</Link>
+						</div>
+						<div className="flex gap-[3px] items-center justify-center">
+							<Calendar className="w-5 h-4" />
+							<span>{formatDateString(paste.createdAt)}</span>
+						</div>
+						<div className="flex gap-[3px] items-center justify-center">
+							<Eye className="w-5 h-4" />
+							<span>64</span>
+						</div>
+						<div className="flex gap-[3px] items-center justify-center">
+							<Star className="w-5 h-4" />
+							<span>64</span>
+						</div>
+						<div className="flex gap-[3px] items-center justify-center">
+							<Timer className="w-5 h-4" />
+							<span>{paste.expiration.toUpperCase()}</span>
+						</div>
+						<div className="flex gap-[3px] items-center justify-center">
+							<MessageSquare className="w-5 h-4" />
+							<button
+								onClick={() => {
+									addCommentRef.current?.focus();
+								}}
+								className="uppercase text-blue-300 transition hover:text-muted-foreground"
+							>
+								ADD COMMENT
+							</button>
+						</div>
+					</div>
+				</div>
+				<div className="flex items-center justify-center gap-1 flex-col">
+					<button className="bg-[rgb(59,89,152)] flex items-center justify-center gap-1 rounded-sm text-xs p-1 pr-1.5">
+						<Facebook fill="white" className="w-4 h-4" />
+						<span>SHARE</span>
+					</button>
+					<button className="bg-[rgb(85,172,238)] flex items-center justify-center gap-1 rounded-sm text-xs p-1 pr-1.5">
+						<Twitter fill="white" className="w-4 h-4" />
+						<span>TWEET</span>
+					</button>
+				</div>
+			</div>
 			{!session || !session.user ? (
 				<>
 					<h2 className="w-full text-xl mt-7 mb-2">Add comment</h2>
@@ -88,6 +160,7 @@ export default function Main({ paste, session }: Props) {
 				<>
 					<h2 className="w-full text-xl mt-7">Your comment</h2>
 					<textarea
+						ref={addCommentRef}
 						name=""
 						id=""
 						cols={30}

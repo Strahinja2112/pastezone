@@ -1,6 +1,5 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import bcrypt from "bcrypt";
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
@@ -31,4 +30,14 @@ export function getTextSize(text: string): string {
 	}
 }
 
-export function checkHashedPassword() {}
+export function formatDateString(dateString: string): string {
+	const date = new Date(dateString);
+
+	const formattedDate = new Intl.DateTimeFormat("en-US", {
+		month: "short",
+		day: "numeric",
+		year: "numeric",
+	}).format(date);
+
+	return `${formattedDate.toUpperCase()}`;
+}
