@@ -13,7 +13,13 @@ export interface InputProps
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
 	({ className, type, onSearch, showSearch = false, ...props }, ref) => {
 		return (
-			<div className="bg-main border rounded-sm px-2 flex items-center justify-center">
+			<div
+				className={cn(
+					"bg-main border rounded-sm flex items-center justify-center",
+					className,
+					showSearch && "pr-2"
+				)}
+			>
 				<input
 					type={type}
 					className={cn(

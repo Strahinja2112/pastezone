@@ -21,6 +21,7 @@ import { TCreateNewPasteReturn } from "../api/pastes/route";
 import { useRouter } from "next/navigation";
 import { generateRandomPassword } from "@/lib/utils";
 import { useRef } from "react";
+import TagsInput from "./tags-input";
 
 type Props = {};
 
@@ -89,10 +90,9 @@ export default function PasteSettings({}: Props) {
 			<div className="grid w-full py-2 grid-cols-3">
 				<span className="h-full flex items-center">Tags:</span>
 				<div className="col-span-2">
-					<Input
-						value={newPaste.tags}
-						onChange={(e) => newPaste.setProp("tags", e.target.value)}
-					/>
+					{newPaste.tags}
+
+					<TagsInput />
 				</div>
 			</div>
 			<div className="grid w-full py-2 grid-cols-3">
