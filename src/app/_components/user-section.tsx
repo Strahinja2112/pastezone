@@ -41,7 +41,7 @@ export default function UserSection({}: Props) {
 				{status === "authenticated" && (
 					<div className="flex gap-2 items-center justify-center">
 						<Link
-							href={`/user/pastebin`}
+							href={`/user/pastezone`}
 							className="p-1 px-2 rounded-[3px] border-b-2 bg-[rgb(43,43,43)] transition hover:text-muted-foreground"
 						>
 							My pastebin

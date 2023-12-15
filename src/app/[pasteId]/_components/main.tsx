@@ -56,7 +56,7 @@ export default function Main({ paste, session, user }: Props) {
 		};
 	}, [paste.id, router, userAgreedToBurn]);
 
-	if (paste.userId !== session?.user?.id || true) {
+	if (paste.userId !== session?.user?.id) {
 		if (isLocked) {
 			return <UnlockPaste paste={paste} onUnlock={() => setIsLocked(false)} />;
 		}
@@ -72,21 +72,23 @@ export default function Main({ paste, session, user }: Props) {
 
 	return (
 		<div className="w-full pt-1 flex gap-3 flex-col items-center justify-center">
-			{paste.expiration === "Burn after read" && (
-				<Info
-					icon={
-						<Flame className="w-8 h-8 text-muted-foreground text-red-600" />
-					}
-					className="border-red-500"
-				>
-					<p className="text-sm">
-						<span className="text-red-500">Burn After Read.</span> Paste was
-						created for your eyes only. When this paste is closed there will be
-						<span className="text-red-500"> no way </span>to recover or view it
-						again!
-					</p>
-				</Info>
-			)}
+			{paste.expiration === "Burn after read" &&
+				paste.userId !== session?.user?.id && (
+					<Info
+						icon={
+							<Flame className="w-8 h-8 text-muted-foreground text-red-600" />
+						}
+						className="border-red-500"
+					>
+						<p className="text-sm">
+							<span className="text-red-500">Burn After Read.</span> Paste was
+							created for your eyes only. When this paste is closed there will
+							be
+							<span className="text-red-500"> no way </span>to recover or view
+							it again!
+						</p>
+					</Info>
+				)}
 			<header className="w-full flex gap-3">
 				<Image
 					src={user.image || "/guest-dark.png"}
@@ -96,7 +98,7 @@ export default function Main({ paste, session, user }: Props) {
 					className="p-[2px] border"
 				/>
 				<div className="w-full text-sm flex flex-col items-start justify-between py-0.5">
-					<h1 className="text-[18px]">{paste.title}</h1>
+					<h1 className="text-[18px]">{paste.title || "Untitled"}</h1>
 					<div className="flex gap-2 items-center justify-center text-[12px]">
 						<div className="flex gap-[3px] items-center justify-center">
 							<UserCircle className="w-5 h-4" />

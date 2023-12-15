@@ -25,7 +25,7 @@ export default function PasteCard(paste: Paste) {
 				href={`/archive/${paste.language}`}
 				className="text-blue-300 hidden sm:flex w-[15%] transition hover:text-muted-foreground"
 			>
-				<span className="w-full text-end">{paste.title}</span>
+				<span className="w-full text-end">{paste.language}</span>
 			</Link>
 		</div>
 	);

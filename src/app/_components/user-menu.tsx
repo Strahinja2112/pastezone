@@ -35,7 +35,7 @@ const sheetLinks: TSheetLink[] = [
 	{
 		icon: UserIcon,
 		title: "my pastebin",
-		href: `/user/pastebin`,
+		href: `/user/pastezone`,
 	},
 	{
 		icon: Mail,

@@ -7,7 +7,7 @@ import {
 	syntaxLanguages,
 } from "@/config/constants";
 import { users } from "./users";
-import { InferInsertModel, sql } from "drizzle-orm";
+import { InferInsertModel } from "drizzle-orm";
 
 export const pastes = sqliteTable("pastes", {
 	id: text("id")
@@ -15,7 +15,7 @@ export const pastes = sqliteTable("pastes", {
 		.primaryKey(),
 	// TODO: MAKE THIS BE WITH GUEST ALSO
 	userId: text("userId")
-		.references(() => users.id)
+		.references(() => users.id, { onDelete: "cascade" })
 		.notNull(),
 	category: text("category", {
 		enum: categories,

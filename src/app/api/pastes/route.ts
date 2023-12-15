@@ -39,10 +39,10 @@ export async function POST(req: NextRequest) {
 			success: true,
 			new: newPaste,
 		});
-	} catch {
+	} catch (e: any) {
 		return NextResponse.json<TCreateNewPasteReturn>({
 			success: false,
-			error: "Could not create paste!",
+			error: `Could not create paste! ${e.message}`,
 			status: 400,
 		});
 	}

@@ -113,7 +113,8 @@ export default function PasteEditor({ user, paste }: Props) {
 							{idx + 1}.
 						</div>
 						<div className="bg-main p-1 transition-all hover:bg-bg px-3 w-full rounded-r-md">
-							{el}
+							{/* chatgpt: used for replacing \t with &nbsp; */}
+							{el.replace(/\t/g, "\u00a0\u00a0\u00a0\u00a0")}
 						</div>
 					</div>
 				))}

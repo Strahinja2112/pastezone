@@ -35,7 +35,7 @@ export default async function MyPasteBin() {
 				/>
 				<div className="w-full text-sm flex flex-col items-start justify-between py-0.5">
 					<div className="w-full flex items-center justify-between">
-						<h1 className="text-[18px]">{user.name}&apos;s PasteBin</h1>
+						<h1 className="text-[18px]">{user.name}&apos;s Pastezone</h1>
 						<Input placeholder="search your own pastes..." showSearch />
 					</div>
 					<div className="flex gap-2 items-center justify-center text-[12px]">
