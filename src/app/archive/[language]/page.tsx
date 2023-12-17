@@ -4,8 +4,8 @@ import PasteCard from "../_components/paste-card";
 import { db } from "@/db";
 import { and, eq } from "drizzle-orm";
 import { pastes } from "@/db/schema/pastes";
-import { TLanguages } from "@/config/constants";
 import Link from "next/link";
+import { TLanguages } from "@/types";
 
 type Props = {
 	params: {

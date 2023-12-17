@@ -13,12 +13,10 @@ type Props = {
 };
 
 export default async function CommentCard({ comment }: Props) {
-	const session = await auth();
-
-	const [user] = await db
-		.select()
-		.from(users)
-		.where(eq(users.id, comment.userId));
+	const [session, [user]] = await Promise.all([
+		auth(),
+		db.select().from(users).where(eq(users.id, comment.userId)),
+	]);
 
 	return (
 		<div className="w-full flex-col rounded-sm">
@@ -30,7 +28,10 @@ export default async function CommentCard({ comment }: Props) {
 					height={20}
 					width={20}
 				/>
-				<Link href={`/user/${user.id}`} className="text-blue-300 uppercase">
+				<Link
+					href={`/user/${user.id}`}
+					className="text-blue-300 uppercase transition hover:text-muted-foreground"
+				>
 					{user.name}
 				</Link>
 				<span className="flex items-center gap-1 justify-center">

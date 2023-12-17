@@ -83,6 +83,11 @@ export default function Main({
 			return;
 		}
 
+		if (addCommentRef.current?.value === "") {
+			toast.error(`Comment cannot be empty!`);
+			return;
+		}
+
 		const res = await createComment({
 			userId: session?.user?.id!,
 			pasteId: paste.id,
