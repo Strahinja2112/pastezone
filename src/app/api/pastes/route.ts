@@ -6,8 +6,6 @@ import bcrypt from "bcrypt";
 import { eq } from "drizzle-orm";
 import { TApiReturn } from "@/types";
 
-export type TCreateNewPasteReturn = TApiReturn<Paste>;
-
 export async function POST(req: NextRequest) {
 	try {
 		const paste: Paste = await req.json();
@@ -24,8 +22,6 @@ export async function POST(req: NextRequest) {
 				createdAt: new Date().toUTCString(),
 			})
 			.returning();
-
-		console.log({ newPaste });
 
 		return NextResponse.json<TApiReturn<Paste>>({
 			success: true,

@@ -2,7 +2,6 @@
 import Info from "@/components/info";
 import { Button } from "@/components/ui/button";
 import type { Paste } from "@/db/schema/pastes";
-import type { Comment } from "@/db/schema/comments";
 import { Session, User } from "next-auth";
 import Link from "next/link";
 import { PropsWithChildren, useEffect, useRef, useState } from "react";
@@ -26,7 +25,6 @@ import { formatDateString } from "@/lib/utils";
 import toast from "react-hot-toast";
 import PasteEditor from "./paste-editor";
 import { createComment } from "@/db/actions/comments";
-import CommentCard from "./comment-card";
 
 type Props = {
 	paste: Paste;
