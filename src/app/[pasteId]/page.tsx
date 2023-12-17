@@ -44,7 +44,7 @@ export default async function PasteIdPage({
 	const allComments = await db
 		.select()
 		.from(comments)
-		.where(and(eq(comments.pasteId, paste.id), eq(comments.userId, user.id)));
+		.where(eq(comments.pasteId, paste.id));
 
 	return (
 		<Main paste={paste} user={user} session={session}>
