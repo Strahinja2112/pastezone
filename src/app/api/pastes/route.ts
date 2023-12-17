@@ -4,17 +4,9 @@ import { db } from "@/db";
 import { getTextSize } from "@/lib/utils";
 import bcrypt from "bcrypt";
 import { eq } from "drizzle-orm";
+import { TApiReturn } from "@/types";
 
-export type TCreateNewPasteReturn =
-	| {
-			success: true;
-			new: Paste;
-	  }
-	| {
-			success: false;
-			error: string;
-			status: number;
-	  };
+export type TCreateNewPasteReturn = TApiReturn<Paste>;
 
 export async function POST(req: NextRequest) {
 	try {
@@ -35,12 +27,12 @@ export async function POST(req: NextRequest) {
 
 		console.log({ newPaste });
 
-		return NextResponse.json<TCreateNewPasteReturn>({
+		return NextResponse.json<TApiReturn<Paste>>({
 			success: true,
-			new: newPaste,
+			data: newPaste,
 		});
 	} catch (e: any) {
-		return NextResponse.json<TCreateNewPasteReturn>({
+		return NextResponse.json<TApiReturn<Paste>>({
 			success: false,
 			error: `Could not create paste! ${e.message}`,
 			status: 400,

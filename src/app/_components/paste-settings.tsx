@@ -17,11 +17,12 @@ import {
 import { useNewPasteStore } from "@/hooks/useNewPaste";
 import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
-import { TCreateNewPasteReturn } from "../api/pastes/route";
 import { useRouter } from "next/navigation";
 import { generateRandomPassword } from "@/lib/utils";
 import { useRef } from "react";
 import TagsInput from "./tags-input";
+import { TApiReturn } from "@/types";
+import { Paste } from "@/db/schema/pastes";
 
 type Props = {};
 
@@ -47,7 +48,7 @@ export default function PasteSettings({}: Props) {
 				}),
 			});
 
-			const data: TCreateNewPasteReturn = await res.json();
+			const data: TApiReturn<Paste> = await res.json();
 
 			if (data.success) {
 				toast.success("New paste has been added!");

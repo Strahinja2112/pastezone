@@ -1,16 +1,5 @@
 "use client";
-import {
-	Bell,
-	ChevronDown,
-	Cog,
-	KeyRound,
-	LogOut,
-	LucideIcon,
-	Mail,
-	MessageSquare,
-	User as UserIcon,
-	UserCircle,
-} from "lucide-react";
+import { ChevronDown, LogOut } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -23,51 +12,8 @@ import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { signOut, useSession } from "next-auth/react";
 import { User } from "next-auth";
-
-type TSheetLink = {
-	icon?: LucideIcon;
-	title: string;
-	href?: string;
-	onClick?(): void;
-};
-
-const sheetLinks: TSheetLink[] = [
-	{
-		icon: UserIcon,
-		title: "my pastebin",
-		href: `/user/pastezone`,
-	},
-	{
-		icon: Mail,
-		title: "my comments",
-		href: "/user/comments",
-	},
-	{
-		icon: MessageSquare,
-		title: "my messages [0]",
-		href: "/messages",
-	},
-	{
-		icon: Bell,
-		title: "my alerts",
-		href: "/alerts",
-	},
-	{
-		icon: UserCircle,
-		title: "Edit profile",
-		href: "/user/profile",
-	},
-	{
-		icon: Cog,
-		title: "edit settings",
-		href: "/user/settings",
-	},
-	{
-		icon: KeyRound,
-		title: "change password",
-		href: "/user/password",
-	},
-];
+import { sheetLinks } from "@/config/constants";
+import { TSheetLink } from "@/types";
 
 export default function UserMenu({ user }: { user: User }) {
 	const { status } = useSession();

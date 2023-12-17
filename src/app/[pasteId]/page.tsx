@@ -1,13 +1,8 @@
 import { auth } from "@/auth";
 import Info from "@/components/info";
-import { Button, buttonVariants } from "@/components/ui/button";
 import { db } from "@/db";
 import { pastes } from "@/db/schema/pastes";
-import Link from "next/link";
 import { eq } from "drizzle-orm";
-import React from "react";
-import { cn } from "@/lib/utils";
-import { Home } from "lucide-react";
 import Main from "./_components/main";
 import { users } from "@/db/schema/users";
 

@@ -1,6 +1,13 @@
-type SyntaxRecord = {
-	[key in (typeof syntaxLanguages)[number]]: string;
-};
+import { TSyntaxRecord, TSheetLink } from "@/types";
+import {
+	Bell,
+	Cog,
+	KeyRound,
+	Mail,
+	MessageSquare,
+	User as UserIcon,
+	UserCircle,
+} from "lucide-react";
 
 export const categories = [
 	"Cryptocurrency",
@@ -44,7 +51,7 @@ export const syntaxLanguages = [
 	"None",
 ] as const;
 
-export const languageExtensions: SyntaxRecord = {
+export const languageExtensions: TSyntaxRecord = {
 	Bash: ".sh",
 	C: ".c",
 	CSharp: ".cs",
@@ -74,7 +81,40 @@ export const expirations = [
 	"None",
 ] as const;
 
-export type TCategory = (typeof categories)[number];
-export type TLanguages = (typeof syntaxLanguages)[number];
-export type TExposures = (typeof exposures)[number];
-export type TExpiration = (typeof expirations)[number];
+export const sheetLinks: TSheetLink[] = [
+	{
+		icon: UserIcon,
+		title: "my pastebin",
+		href: `/user/pastezone`,
+	},
+	{
+		icon: Mail,
+		title: "my comments",
+		href: "/user/comments",
+	},
+	{
+		icon: MessageSquare,
+		title: "my messages [0]",
+		href: "/messages",
+	},
+	{
+		icon: Bell,
+		title: "my alerts",
+		href: "/alerts",
+	},
+	{
+		icon: UserCircle,
+		title: "Edit profile",
+		href: "/user/profile",
+	},
+	{
+		icon: Cog,
+		title: "edit settings",
+		href: "/user/settings",
+	},
+	{
+		icon: KeyRound,
+		title: "change password",
+		href: "/user/password",
+	},
+];
