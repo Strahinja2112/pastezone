@@ -25,6 +25,7 @@ import { useRouter } from "next/navigation";
 import { formatDateString } from "@/lib/utils";
 import toast from "react-hot-toast";
 import PasteEditor from "./paste-editor";
+import { createComment } from "@/db/actions/comments";
 
 type Props = {
 	paste: Paste;
@@ -209,7 +210,23 @@ export default function Main({ paste, session, user }: Props) {
 						rows={8}
 						className="bg-bg border-none focus:outline-none rounded-md text-sm p-2 w-full h-full resize-none"
 					/>
-					<Button variant="pastebin">Add comment</Button>
+					<Button
+						variant="pastebin"
+						onClick={() =>
+							createComment({
+								id: "",
+								userId: "",
+								createdAt: new Date(),
+								pasteId: "",
+								content: "",
+								size: "",
+								numberOfLikes: 0,
+								numberOfDislikes: 0,
+							})
+						}
+					>
+						Add comment
+					</Button>
 				</>
 			)}
 		</div>

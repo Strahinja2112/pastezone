@@ -9,6 +9,8 @@ export async function createComment(
 	if (!data) {
 	}
 
+	console.log({ data });
+
 	return {
 		success: true,
 		data: data,
