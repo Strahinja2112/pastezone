@@ -8,16 +8,26 @@ export interface InputProps
 	extends React.InputHTMLAttributes<HTMLInputElement> {
 	onSearch?(): void;
 	showSearch?: boolean;
+	containerClassName?: string;
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-	({ className, type, onSearch, showSearch = false, ...props }, ref) => {
+	(
+		{
+			className,
+			containerClassName,
+			type,
+			onSearch,
+			showSearch = false,
+			...props
+		},
+		ref
+	) => {
 		return (
 			<div
 				className={cn(
-					"bg-main border rounded-sm flex items-center justify-center",
-					className,
-					showSearch && "pr-2"
+					"bg-main border rounded-sm px-2 flex items-center justify-center",
+					containerClassName
 				)}
 			>
 				<input

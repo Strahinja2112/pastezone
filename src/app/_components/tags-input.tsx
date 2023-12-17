@@ -31,7 +31,6 @@ export default function TagsInput({}: Props) {
 				</span>
 			))}
 			<Input
-				multiple
 				value={currentTag}
 				onChange={(e) => setCurrentTag(e.target.value)}
 				onKeyDown={(e) => {
@@ -44,7 +43,7 @@ export default function TagsInput({}: Props) {
 						setCurrentTag("");
 					}
 				}}
-				className="border-none px-0 first:px-1"
+				containerClassName="border-none"
 			/>
 		</div>
 	);

@@ -5,7 +5,7 @@ import type { Paste } from "@/db/schema/pastes";
 import type { Comment } from "@/db/schema/comments";
 import { Session, User } from "next-auth";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { PropsWithChildren, useEffect, useRef, useState } from "react";
 import UnlockPaste from "./unlock-paste";
 import BurnAfterRead from "./burn-after-read";
 import {
@@ -32,10 +32,14 @@ type Props = {
 	paste: Paste;
 	session: Session | null;
 	user: User;
-	comments: Comment[];
 };
 
-export default function Main({ paste, session, user, comments }: Props) {
+export default function Main({
+	paste,
+	session,
+	user,
+	children,
+}: PropsWithChildren<Props>) {
 	const [isLocked, setIsLocked] = useState(!!paste.password);
 	const [userAgreedToBurn, setUserAgreedToBurn] = useState(false);
 
@@ -85,13 +89,14 @@ export default function Main({ paste, session, user, comments }: Props) {
 			createdAt: new Date().toUTCString(),
 			content: addCommentRef.current?.value || "",
 			size: "",
-			numberOfLikes: 0,
-			numberOfDislikes: 0,
+			likeCount: 0,
+			dislikeCount: 0,
 		});
 
 		if (res.success) {
 			toast.success("Comment added!");
 			addCommentRef.current!.value = "";
+			router.refresh();
 		} else {
 			toast.error(`Could not add comment! error: ${res.error}`);
 		}
@@ -212,12 +217,7 @@ export default function Main({ paste, session, user, comments }: Props) {
 					readOnly
 				/>
 			</div>
-			<div className="w-full border-b flex flex-col items-start justify-center">
-				<h1 className="text-xl">Comments</h1>
-				{comments.map((comment) => (
-					<CommentCard key={comment.id} comment={comment} />
-				))}
-			</div>
+			{children}
 			{!session || !session.user ? (
 				<>
 					<h2 className="w-full text-xl mb-2">Add comment</h2>

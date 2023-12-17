@@ -1,4 +1,4 @@
-import { sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { createId } from "@paralleldrive/cuid2";
 import {
 	categories,
@@ -13,9 +13,10 @@ export const pastes = sqliteTable("pastes", {
 	id: text("id")
 		.$defaultFn(() => createId())
 		.primaryKey(),
-	// TODO: MAKE THIS BE WITH GUEST ALSO
 	userId: text("userId")
-		.references(() => users.id, { onDelete: "cascade" })
+		.references(() => users.id, {
+			onDelete: "cascade",
+		})
 		.notNull(),
 	category: text("category", {
 		enum: categories,
@@ -35,6 +36,9 @@ export const pastes = sqliteTable("pastes", {
 	title: text("title").notNull(),
 	content: text("content").notNull(),
 	size: text("size").notNull(),
+	likeCount: integer("likeCount", { mode: "number" }).default(0),
+	dislikeCount: integer("dislikeCount", { mode: "number" }).default(0),
+	viewCount: integer("viewCount", { mode: "number" }).default(0),
 });
 
 export type Paste = InferInsertModel<typeof pastes>;

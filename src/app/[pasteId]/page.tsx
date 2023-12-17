@@ -6,6 +6,7 @@ import { and, eq } from "drizzle-orm";
 import Main from "./_components/main";
 import { users } from "@/db/schema/users";
 import { comments } from "@/db/schema/comments";
+import CommentCard from "./_components/comment-card";
 
 export default async function PasteIdPage({
 	params,
@@ -46,6 +47,15 @@ export default async function PasteIdPage({
 		.where(and(eq(comments.pasteId, paste.id), eq(comments.userId, user.id)));
 
 	return (
-		<Main paste={paste} user={user} comments={allComments} session={session} />
+		<Main paste={paste} user={user} session={session}>
+			{allComments.length > 0 && (
+				<div className="w-full border-b pb-4 gap-3 flex flex-col items-start justify-center">
+					<h1 className="text-xl mb-1">Comments</h1>
+					{allComments.map((comment) => (
+						<CommentCard key={comment.id} comment={comment} />
+					))}
+				</div>
+			)}
+		</Main>
 	);
 }

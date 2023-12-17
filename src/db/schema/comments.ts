@@ -16,8 +16,8 @@ export const comments = sqliteTable("comment", {
 		.notNull(),
 	content: text("content").notNull(),
 	createdAt: text("createdAt").notNull(),
-	numberOfLikes: integer("numberOfLikes").notNull(),
-	numberOfDislikes: integer("numberOfDislikes").notNull(),
+	likeCount: integer("likeCount").default(0),
+	dislikeCount: integer("dislikeCount").default(0),
 	size: text("size").notNull(),
 });
 

@@ -25,9 +25,7 @@ export function generateRandomPassword(length: number = 15): string {
 export function getTextSize(text: string): string {
 	const byteSize = new TextEncoder().encode(text).length;
 
-	if (byteSize < 1024) {
-		return `${byteSize} B`;
-	} else if (byteSize < 1024 * 1024) {
+	if (byteSize < 1024 * 1024) {
 		return `${(byteSize / 1024).toFixed(2)} kB`;
 	} else {
 		return `${(byteSize / (1024 * 1024)).toFixed(2)} MB`;
