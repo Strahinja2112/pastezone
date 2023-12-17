@@ -2,7 +2,7 @@ import { auth } from "@/auth";
 import Info from "@/components/info";
 import { db } from "@/db";
 import { pastes } from "@/db/schema/pastes";
-import { and, eq } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import Main from "./_components/main";
 import { users } from "@/db/schema/users";
 import { comments } from "@/db/schema/comments";
@@ -47,7 +47,12 @@ export default async function PasteIdPage({
 		.where(eq(comments.pasteId, paste.id));
 
 	return (
-		<Main paste={paste} user={user} session={session}>
+		<Main
+			paste={paste}
+			user={user}
+			commentCount={allComments.length}
+			session={session}
+		>
 			{allComments.length > 0 && (
 				<div className="w-full border-b pb-4 gap-3 flex flex-col items-start justify-center">
 					<h1 className="text-xl mb-1">Comments</h1>

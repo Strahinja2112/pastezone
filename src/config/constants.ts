@@ -1,4 +1,4 @@
-import { TSyntaxRecord, TSheetLink } from "@/types";
+import { TSyntaxRecord, TSheetLink } from "@/config/types";
 import {
 	Bell,
 	Cog,

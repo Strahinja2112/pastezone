@@ -1,6 +1,6 @@
 "use server";
 
-import { TApiReturn } from "@/types";
+import { TApiReturn } from "@/config/types";
 import { Paste, pastes } from "../schema/pastes";
 import bcrypt from "bcrypt";
 import { db } from "..";

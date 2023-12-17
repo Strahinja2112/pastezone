@@ -89,3 +89,10 @@ body {
 		@apply bg-background text-foreground;
 	}
 }
+
+.print {
+	display: none;
+	@media print {
+		display: flex;
+	}
+}

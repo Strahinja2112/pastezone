@@ -4,7 +4,7 @@ import {
 	expirations,
 	exposures,
 	syntaxLanguages,
-} from "./config/constants";
+} from "./constants";
 
 export type TApiReturn<T> =
 	| {

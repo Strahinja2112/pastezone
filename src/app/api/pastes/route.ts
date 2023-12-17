@@ -4,7 +4,7 @@ import { db } from "@/db";
 import { getTextSize } from "@/lib/utils";
 import bcrypt from "bcrypt";
 import { eq } from "drizzle-orm";
-import { TApiReturn } from "@/types";
+import { TApiReturn } from "@/config/types";
 
 export async function POST(req: NextRequest) {
 	try {

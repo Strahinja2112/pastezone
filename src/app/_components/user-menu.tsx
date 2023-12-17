@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
 import { signOut, useSession } from "next-auth/react";
 import { User } from "next-auth";
 import { sheetLinks } from "@/config/constants";
-import { TSheetLink } from "@/types";
+import { TSheetLink } from "@/config/types";
 
 export default function UserMenu({ user }: { user: User }) {
 	const { status } = useSession();
@@ -37,9 +37,9 @@ export default function UserMenu({ user }: { user: User }) {
 				</div>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className="p-0 w-[200px] border text-sm flex flex-col items-center bg-[rgb(37,37,37)] justify-center">
-				{sheetLinks.map((link, index) => (
+				{sheetLinks.map((link) => (
 					<SheetLink
-						key={index}
+						key={link.title}
 						icon={link.icon}
 						title={link.title}
 						href={link.href}

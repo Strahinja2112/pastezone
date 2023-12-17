@@ -5,7 +5,7 @@ import { db } from "@/db";
 import { and, eq } from "drizzle-orm";
 import { pastes } from "@/db/schema/pastes";
 import Link from "next/link";
-import { TLanguages } from "@/types";
+import { TLanguages } from "@/config/types";
 
 type Props = {
 	params: {

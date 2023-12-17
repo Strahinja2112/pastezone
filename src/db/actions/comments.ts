@@ -1,6 +1,6 @@
 "use server";
 
-import { TApiReturn } from "@/types";
+import { TApiReturn } from "@/config/types";
 import { Comment, comments } from "../schema/comments";
 import { getTextSize } from "@/lib/utils";
 import { db } from "..";

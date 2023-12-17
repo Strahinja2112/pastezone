@@ -29,7 +29,9 @@ export default async function Pastes() {
 						My Pastes
 					</Link>
 					{myPastes.length > 0 ? (
-						myPastes.map((paste, idx) => <PasteCard key={idx} {...paste} />)
+						myPastes.map((paste, idx) => (
+							<PasteCard key={paste.id} {...paste} />
+						))
 					) : (
 						<div className="flex border-t p-1 gap-2 text-sm text-muted-foreground">
 							<Globe2 className="text-muted-foreground h-5 w-5" />

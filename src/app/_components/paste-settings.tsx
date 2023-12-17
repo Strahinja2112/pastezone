@@ -21,7 +21,7 @@ import { useRouter } from "next/navigation";
 import { generateRandomPassword } from "@/lib/utils";
 import { useRef } from "react";
 import TagsInput from "./tags-input";
-import { TApiReturn } from "@/types";
+import { TApiReturn } from "@/config/types";
 import { Paste } from "@/db/schema/pastes";
 
 type Props = {};

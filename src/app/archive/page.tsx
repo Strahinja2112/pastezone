@@ -3,6 +3,11 @@ import { db } from "@/db";
 import { pastes } from "@/db/schema/pastes";
 import { eq } from "drizzle-orm";
 import PasteCard from "./_components/paste-card";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+	title: "Pastes Archive - Pastezone.com",
+};
 
 export default async function ArchivePage() {
 	// ! NIJE NAJBOLJE RESENJE AL AJ
@@ -33,8 +38,8 @@ export default async function ArchivePage() {
 						<span className="w-full text-end">SYNTAX</span>
 					</div>
 				</div>
-				{allPastes.map((paste, idx) => (
-					<PasteCard key={idx} {...paste} />
+				{allPastes.map((paste) => (
+					<PasteCard key={paste.id} {...paste} />
 				))}
 			</div>
 		</div>

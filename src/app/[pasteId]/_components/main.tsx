@@ -30,6 +30,7 @@ type Props = {
 	paste: Paste;
 	session: Session | null;
 	user: User;
+	commentCount: number;
 };
 
 export default function Main({
@@ -37,6 +38,7 @@ export default function Main({
 	session,
 	user,
 	children,
+	commentCount,
 }: PropsWithChildren<Props>) {
 	const [isLocked, setIsLocked] = useState(!!paste.password);
 	const [userAgreedToBurn, setUserAgreedToBurn] = useState(false);
@@ -46,17 +48,14 @@ export default function Main({
 	const rawPasteRef = useRef<HTMLTextAreaElement | null>(null);
 
 	useEffect(() => {
-		async function deletePaste() {
-			await fetch(`/api/pastes?id=${paste.id}`, {
-				method: "DELETE",
-			});
-
-			router.refresh();
-		}
-
 		return () => {
+			fetch(`/api/pastes/addView?id=${paste.id}`);
 			if (userAgreedToBurn) {
-				deletePaste();
+				fetch(`/api/pastes?id=${paste.id}`, {
+					method: "DELETE",
+				}).then(() => {
+					router.refresh();
+				});
 			}
 		};
 	}, [paste.id, router, userAgreedToBurn]);
@@ -150,11 +149,11 @@ export default function Main({
 						</div>
 						<div className="flex gap-[3px] items-center justify-center">
 							<Eye className="w-5 h-4" />
-							<span>64</span>
+							<span>{paste.viewCount}</span>
 						</div>
 						<div className="flex gap-[3px] items-center justify-center">
 							<Star className="w-5 h-4" />
-							<span>64</span>
+							<span>{(paste.likeCount || 0) - (paste.dislikeCount || 0)}</span>
 						</div>
 						<div className="flex gap-[3px] items-center justify-center">
 							<Timer className="w-5 h-4" />
@@ -168,7 +167,7 @@ export default function Main({
 								}}
 								className="uppercase text-blue-300 transition hover:text-muted-foreground"
 							>
-								ADD COMMENT
+								{commentCount > 0 ? commentCount : "ADD COMMENT"}
 							</button>
 						</div>
 					</div>
