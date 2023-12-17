@@ -26,7 +26,7 @@ export const useNewPasteStore = create<TNewPasteStore>((set) => ({
 	userId: "",
 	setProp(name: TStrings, value: string) {
 		if (!name) {
-			console.log("NAME IS NOT BEING SET!");
+			console.error("NAME IS NOT BEING SET!");
 			return;
 		}
 

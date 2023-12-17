@@ -2,17 +2,18 @@ import { auth } from "@/auth";
 import Info from "@/components/info";
 import { db } from "@/db";
 import { pastes } from "@/db/schema/pastes";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import Main from "./_components/main";
 import { users } from "@/db/schema/users";
+import { comments } from "@/db/schema/comments";
 
-type Props = {
+export default async function PasteIdPage({
+	params,
+}: {
 	params: {
 		pasteId: string;
 	};
-};
-
-export default async function PasteIdPage({ params }: Props) {
+}) {
 	const session = await auth();
 
 	const [paste] = await db
@@ -39,5 +40,12 @@ export default async function PasteIdPage({ params }: Props) {
 		.from(users)
 		.where(eq(users.id, paste.userId));
 
-	return <Main paste={paste} user={user} session={session} />;
+	const allComments = await db
+		.select()
+		.from(comments)
+		.where(and(eq(comments.pasteId, paste.id), eq(comments.userId, user.id)));
+
+	return (
+		<Main paste={paste} user={user} comments={allComments} session={session} />
+	);
 }

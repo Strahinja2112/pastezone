@@ -1,10 +1,11 @@
 "use client";
 import Info from "@/components/info";
 import { Button } from "@/components/ui/button";
-import { Paste } from "@/db/schema/pastes";
+import type { Paste } from "@/db/schema/pastes";
+import type { Comment } from "@/db/schema/comments";
 import { Session, User } from "next-auth";
 import Link from "next/link";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import UnlockPaste from "./unlock-paste";
 import BurnAfterRead from "./burn-after-read";
 import {
@@ -18,7 +19,6 @@ import {
 	Timer,
 	Twitter,
 	UserCircle,
-	UserIcon,
 } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -26,14 +26,16 @@ import { formatDateString } from "@/lib/utils";
 import toast from "react-hot-toast";
 import PasteEditor from "./paste-editor";
 import { createComment } from "@/db/actions/comments";
+import CommentCard from "./comment-card";
 
 type Props = {
 	paste: Paste;
 	session: Session | null;
 	user: User;
+	comments: Comment[];
 };
 
-export default function Main({ paste, session, user }: Props) {
+export default function Main({ paste, session, user, comments }: Props) {
 	const [isLocked, setIsLocked] = useState(!!paste.password);
 	const [userAgreedToBurn, setUserAgreedToBurn] = useState(false);
 
@@ -68,6 +70,30 @@ export default function Main({ paste, session, user }: Props) {
 					onClick={() => setUserAgreedToBurn(true)}
 				/>
 			);
+		}
+	}
+
+	async function createNewComment() {
+		if (!paste.id) {
+			toast.error(`Something went wrong!`);
+			return;
+		}
+
+		const res = await createComment({
+			userId: session?.user?.id!,
+			pasteId: paste.id,
+			createdAt: new Date().toUTCString(),
+			content: addCommentRef.current?.value || "",
+			size: "",
+			numberOfLikes: 0,
+			numberOfDislikes: 0,
+		});
+
+		if (res.success) {
+			toast.success("Comment added!");
+			addCommentRef.current!.value = "";
+		} else {
+			toast.error(`Could not add comment! error: ${res.error}`);
 		}
 	}
 
@@ -186,6 +212,12 @@ export default function Main({ paste, session, user }: Props) {
 					readOnly
 				/>
 			</div>
+			<div className="w-full border-b flex flex-col items-start justify-center">
+				<h1 className="text-xl">Comments</h1>
+				{comments.map((comment) => (
+					<CommentCard key={comment.id} comment={comment} />
+				))}
+			</div>
 			{!session || !session.user ? (
 				<>
 					<h2 className="w-full text-xl mb-2">Add comment</h2>
@@ -207,24 +239,10 @@ export default function Main({ paste, session, user }: Props) {
 						name=""
 						id=""
 						cols={30}
-						rows={8}
-						className="bg-bg border-none focus:outline-none rounded-md text-sm p-2 w-full h-full resize-none"
+						rows={4}
+						className="bg-bg border focus:outline-none rounded-md text-sm p-2 w-full h-full resize-none"
 					/>
-					<Button
-						variant="pastebin"
-						onClick={() =>
-							createComment({
-								id: "",
-								userId: "",
-								createdAt: new Date(),
-								pasteId: "",
-								content: "",
-								size: "",
-								numberOfLikes: 0,
-								numberOfDislikes: 0,
-							})
-						}
-					>
+					<Button variant="pastebin" onClick={createNewComment}>
 						Add comment
 					</Button>
 				</>

@@ -2,7 +2,7 @@ import { createId } from "@paralleldrive/cuid2";
 import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
 import { users } from "./users";
 import { pastes } from "./pastes";
-import { InferSelectModel } from "drizzle-orm";
+import { InferInsertModel } from "drizzle-orm";
 
 export const comments = sqliteTable("comment", {
 	id: text("id")
@@ -15,12 +15,10 @@ export const comments = sqliteTable("comment", {
 		.references(() => pastes.id, { onDelete: "cascade" })
 		.notNull(),
 	content: text("content").notNull(),
-	createdAt: integer("createdAt", {
-		mode: "timestamp_ms",
-	}).notNull(),
+	createdAt: text("createdAt").notNull(),
 	numberOfLikes: integer("numberOfLikes").notNull(),
 	numberOfDislikes: integer("numberOfDislikes").notNull(),
 	size: text("size").notNull(),
 });
 
-export type Comment = InferSelectModel<typeof comments>;
+export type Comment = InferInsertModel<typeof comments>;
