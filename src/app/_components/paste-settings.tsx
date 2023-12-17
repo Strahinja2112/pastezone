@@ -90,8 +90,6 @@ export default function PasteSettings({}: Props) {
 			<div className="grid w-full py-2 grid-cols-3">
 				<span className="h-full flex items-center">Tags:</span>
 				<div className="col-span-2">
-					{newPaste.tags}
-
 					<TagsInput />
 				</div>
 			</div>

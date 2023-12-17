@@ -13,7 +13,7 @@ export default function PasteCard(paste: Paste) {
 					href={`/${paste.id}`}
 					className="text-blue-300 transition hover:text-muted-foreground"
 				>
-					{paste.title}
+					{paste.title || "Untitled"}
 				</Link>
 			</div>
 			<h1 className="hidden sm:flex items-center justify-center w-[20%] text-end">

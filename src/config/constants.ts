@@ -75,6 +75,6 @@ export const expirations = [
 ] as const;
 
 export type TCategory = (typeof categories)[number];
-export type TSyntax = (typeof syntaxLanguages)[number];
+export type TLanguages = (typeof syntaxLanguages)[number];
 export type TExposures = (typeof exposures)[number];
 export type TExpiration = (typeof expirations)[number];
