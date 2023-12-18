@@ -4,7 +4,7 @@ import { Globe2 } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import { auth } from "@/auth";
-import { eq, ne } from "drizzle-orm";
+import { and, eq, ne } from "drizzle-orm";
 import PasteCard from "@/components/paste-card";
 
 export default async function Pastes() {
@@ -14,7 +14,12 @@ export default async function Pastes() {
 		db
 			.select()
 			.from(pastes)
-			.where(ne(pastes.userId, session?.user?.id || "")),
+			.where(
+				and(
+					ne(pastes.userId, session?.user?.id || ""),
+					eq(pastes.exposure, "Public")
+				)
+			),
 		db
 			.select()
 			.from(pastes)
