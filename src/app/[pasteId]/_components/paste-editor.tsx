@@ -1,4 +1,5 @@
 import ConfirmModal from "@/components/confirm-modal";
+import LikeDislike from "@/components/like-dislike";
 import { languageExtensions } from "@/config/constants";
 import { Paste } from "@/db/schema/pastes";
 import { cn } from "@/lib/utils";
@@ -19,7 +20,7 @@ export default function PasteEditor({ user, paste }: Props) {
 	const [isCopied, setIsCopied] = useState(false);
 	const router = useRouter();
 
-	async function clonePaste() {
+	async function clonePaste(): Promise<void> {
 		const res = await fetch("/api/pastes/clone", {
 			method: "POST",
 			headers: {
@@ -36,7 +37,7 @@ export default function PasteEditor({ user, paste }: Props) {
 		}
 	}
 
-	function downloadPaste() {
+	function downloadPaste(): void {
 		const extenstion = languageExtensions[paste.language];
 		const blob = new Blob([paste.content], {
 			type: `text/${extenstion}`,
@@ -49,7 +50,20 @@ export default function PasteEditor({ user, paste }: Props) {
 		URL.revokeObjectURL(url);
 	}
 
-	function printPaste() {}
+	async function pasteAction(
+		method: "like" | "dislike",
+		action: "add" | "remove"
+	): Promise<boolean> {
+		const res = await fetch(
+			`/api/pastes/like-dislike?id=${paste.id}&method=${method}&action=${action}`
+		);
+
+		const data: {
+			success: boolean;
+		} = await res.json();
+
+		return data.success;
+	}
 
 	const printDivRef = useRef<HTMLInputElement | null>(null);
 
@@ -84,14 +98,12 @@ export default function PasteEditor({ user, paste }: Props) {
 					</Link>
 					<div className="text-[10px] flex items-center justify-center gap-2">
 						<span>{paste.size}</span> | <span>{paste.category}</span> |{" "}
-						<span className="bg-black/20 p-[1px] text-sm rounded-sm text-blue-300/75 transition cursor-pointer hover:text-muted-foreground flex items-center justify-center gap-1">
-							<ThumbsUp className="w-4 h-4" />
-							<span>0</span>
-						</span>
-						<span className="bg-black/20 p-[1px] text-sm rounded-sm text-blue-300/75 transition cursor-pointer hover:text-muted-foreground flex items-center justify-center gap-1">
-							<ThumbsDown className="w-4 h-4" />
-							<span>0</span>
-						</span>
+						<LikeDislike
+							item={paste}
+							onLike={() => pasteAction("like", "add")}
+							onDislike={() => pasteAction("dislike", "add")}
+							remove={(data) => pasteAction(data, "remove")}
+						/>
 					</div>
 				</div>
 				<div className="flex gap-2 items-center justify-center text-xs">
@@ -135,10 +147,7 @@ export default function PasteEditor({ user, paste }: Props) {
 					</button>
 					<ReactToPrint
 						trigger={() => (
-							<button
-								onClick={printPaste}
-								className="bg-black/20 p-1 px-1.5 rounded-sm text-blue-300/75 transition hover:text-muted-foreground"
-							>
+							<button className="bg-black/20 p-1 px-1.5 rounded-sm text-blue-300/75 transition hover:text-muted-foreground">
 								print
 							</button>
 						)}

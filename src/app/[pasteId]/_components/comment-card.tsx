@@ -7,6 +7,7 @@ import Link from "next/link";
 import { eq } from "drizzle-orm";
 import Image from "next/image";
 import { formatDateString, timeAgo } from "@/lib/utils";
+import LikeDislike from "./like-dislike";
 
 type Props = {
 	comment: Comment;
@@ -56,14 +57,7 @@ export default async function CommentCard({ comment }: Props) {
 						</Link>
 						<div className="text-[10px] flex items-center justify-center gap-2">
 							<span>{comment.size}</span> |
-							<span className="bg-black/20 p-[1px] text-xs rounded-sm text-blue-300/75 transition cursor-pointer hover:text-muted-foreground flex items-center justify-center gap-1">
-								<ThumbsUp className="w-4 h-4" />
-								<span>{comment.likeCount}</span>
-							</span>
-							<span className="bg-black/20 p-[1px] text-xs rounded-sm text-blue-300/75 transition cursor-pointer hover:text-muted-foreground flex items-center justify-center gap-1">
-								<ThumbsDown className="w-4 h-4" />
-								<span>{comment.dislikeCount}</span>
-							</span>
+							<LikeDislike item={comment} />
 						</div>
 					</div>
 					<div className="flex gap-2 items-center justify-center text-xs">
