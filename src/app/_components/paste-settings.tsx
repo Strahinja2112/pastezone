@@ -21,8 +21,6 @@ import { useRouter } from "next/navigation";
 import { generateRandomPassword } from "@/lib/utils";
 import { useRef } from "react";
 import TagsInput from "./tags-input";
-import { TApiReturn } from "@/config/types";
-import { Paste } from "@/db/schema/pastes";
 
 type Props = {};
 
@@ -34,36 +32,18 @@ export default function PasteSettings({}: Props) {
 
 	const newPaste = useNewPasteStore();
 
-	async function create() {
-		try {
-			toast("Creating a new paste!");
-			const res = await fetch("/api/pastes", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					...newPaste,
-					userId: session?.user?.id || "GUEST_ID",
-				}),
-			});
-
-			const data: TApiReturn<Paste> = await res.json();
-
-			if (data.success) {
-				toast.success("New paste has been added!");
-				router.refresh();
-			} else {
-				toast.error(`Could not create paste! error: ${data.error}`);
-			}
-		} catch {
-			return null;
+	async function createPaste() {
+		const res = await newPaste.create(session);
+		if (res.success) {
+			toast.success(res.message);
+			router.refresh();
+		} else {
+			toast.error(res.message);
 		}
 	}
 
 	return (
 		<div className="w-full text-sm font-light md:w-[65%] pr-0 md:pr-3 flex flex-col items-center justify-center">
-			{/* <pre>{JSON.stringify(newPaste, null, 2)}</pre> */}
 			<div className="grid w-full py-2 grid-cols-3">
 				<span className="h-full flex items-center">Category:</span>
 				<div className="col-span-2">
@@ -222,13 +202,22 @@ export default function PasteSettings({}: Props) {
 			</div>
 			<div className="grid w-full py-2 grid-cols-3">
 				<span className="h-full flex items-center"></span>
-				<div className="col-span-2">
+				<div className="col-span-2 flex items-center justify-start gap-3">
 					<button
 						className="p-2 px-3 rounded-[3px] border-b-2 bg-[rgb(43,43,43)] transition hover:text-muted-foreground"
-						onClick={create}
+						onClick={createPaste}
 					>
 						Create new Paste
 					</button>
+					<Checkbox
+						id="pasteAsGuest"
+						onCheckedChange={(e) => {
+							newPaste.setProp("publishAsGuest", e.valueOf() === true);
+						}}
+					/>
+					<Label htmlFor="pasteAsGuest" className="cursor-pointer -ml-2">
+						Paste as a guest
+					</Label>
 				</div>
 			</div>
 		</div>
