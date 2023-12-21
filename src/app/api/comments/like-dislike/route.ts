@@ -23,8 +23,6 @@ export async function GET(req: NextRequest) {
 		});
 	}
 
-	console.log({ comment, method });
-
 	try {
 		if (method === "like") {
 			await db

@@ -163,7 +163,7 @@ export default function PasteSettings({}: Props) {
 					</div>
 					<div className="w-full">
 						<Input
-							disabled={newPaste.password === ""}
+							disabled={passCheckBox.current?.dataset.state === "unchecked"}
 							value={newPaste.password || ""}
 							onChange={(e) => {
 								newPaste.setProp("password", e.target.value);

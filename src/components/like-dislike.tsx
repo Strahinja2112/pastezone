@@ -32,7 +32,6 @@ export default function LikeDislike({
 		}
 
 		const success = await onLike();
-		console.log({ success });
 		if (success) {
 			setAction("liked");
 			setLikeCount(likeCount + 1);

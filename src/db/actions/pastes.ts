@@ -21,8 +21,6 @@ export async function createPaste(data: Paste): Promise<TApiReturn<Paste>> {
 			})
 			.returning();
 
-		console.log({ newPaste });
-
 		return {
 			success: true,
 			data: newPaste,
