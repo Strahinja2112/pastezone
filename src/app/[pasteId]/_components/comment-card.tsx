@@ -2,11 +2,11 @@ import { auth } from "@/auth";
 import { db } from "@/db";
 import { Comment } from "@/db/schema/comments";
 import { users } from "@/db/schema/users";
-import { Calendar, ThumbsDown, ThumbsUp } from "lucide-react";
+import { Calendar } from "lucide-react";
 import Link from "next/link";
 import { eq } from "drizzle-orm";
 import Image from "next/image";
-import { formatDateString, timeAgo } from "@/lib/utils";
+import { timeAgo } from "@/lib/utils";
 import LikeDislike from "./like-dislike";
 
 type Props = {
@@ -86,7 +86,7 @@ export default async function CommentCard({ comment }: Props) {
 					{comment.content.split("\n").map((el, idx) => (
 						<div
 							key={idx}
-							className="bg-main text-xs p-1 transition-all hover:bg-bg px-3 w-full rounded-r-md"
+							className="bg-main text-sm p-1 transition-all hover:bg-bg px-2 w-full rounded-r-md"
 						>
 							{/* chatgpt: used for replacing \t with &nbsp; */}
 							{el.replace(/\t/g, "\u00a0\u00a0\u00a0\u00a0")}

@@ -9,10 +9,14 @@ export const comments = sqliteTable("comment", {
 		.$defaultFn(() => createId())
 		.primaryKey(),
 	userId: text("userId")
-		.references(() => users.id, { onDelete: "cascade" })
+		.references(() => users.id, {
+			onDelete: "cascade",
+		})
 		.notNull(),
 	pasteId: text("pasteId")
-		.references(() => pastes.id, { onDelete: "cascade" })
+		.references(() => pastes.id, {
+			onDelete: "cascade",
+		})
 		.notNull(),
 	content: text("content").notNull(),
 	createdAt: text("createdAt").notNull(),
