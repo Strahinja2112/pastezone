@@ -5,6 +5,7 @@ import { create } from "zustand";
 
 type TNewPasteStore = Paste & {
 	publishAsGuest: boolean;
+	syntaxHighlighting: boolean;
 	setProp<K extends keyof TNewPasteStore>(
 		name: K,
 		value: TNewPasteStore[K] | string
@@ -21,6 +22,7 @@ export const useNewPasteStore = create<TNewPasteStore>((set, get) => ({
 	content: "",
 	expiration: "Never",
 	language: "None",
+	syntaxHighlighting: false,
 	title: "",
 	size: "",
 	tags: "",
@@ -56,22 +58,23 @@ export const useNewPasteStore = create<TNewPasteStore>((set, get) => ({
 				},
 				body: JSON.stringify({
 					...newPaste,
+					language: newPaste.syntaxHighlighting ? newPaste.language : "None",
 					userId,
 				}),
 			});
 
 			const data: TApiReturn<Paste> = await res.json();
 
-			if (data.success) {
+			if (!data.success) {
 				return {
-					success: true,
-					message: "New paste has been added!",
+					success: false,
+					message: `Could not create paste! error: ${data.error}`,
 				};
 			}
 
 			return {
-				success: false,
-				message: `Could not create paste! error: ${data.error}`,
+				success: true,
+				message: "New paste has been added!",
 			};
 		} catch {
 			return {

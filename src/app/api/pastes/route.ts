@@ -10,6 +10,8 @@ export async function POST(req: NextRequest) {
 	try {
 		const paste: Paste = await req.json();
 
+		console.log({ paste });
+
 		const password =
 			paste.password !== "" ? await bcrypt.hash(paste.password, 13) : "";
 
