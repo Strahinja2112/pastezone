@@ -186,7 +186,7 @@ export default function Main({
 			{!session || !session.user ? (
 				<Info>
 					<b>Not a member of Pastebin yet?</b>{" "}
-					<Link href="/api/auth/signin" className="text-blue-300 underline">
+					<Link href="/login" className="text-blue-300 underline">
 						Sign Up,
 					</Link>
 					it unlocks many cool features!
@@ -226,7 +226,7 @@ export default function Main({
 					<Info>
 						<p>
 							Please,{" "}
-							<Link href="/api/auth/signin" className="text-blue-300">
+							<Link href="/login" className="text-blue-300">
 								Sign In
 							</Link>{" "}
 							to add a comment

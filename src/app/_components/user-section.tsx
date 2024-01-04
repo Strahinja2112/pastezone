@@ -24,14 +24,14 @@ export default function UserSection({}: Props) {
 				{status === "unauthenticated" && (
 					<div className="flex gap-2 items-center justify-center">
 						<Link
-							href="/api/auth/signin"
+							href="/login"
 							className="p-1 px-2 rounded-[3px] border-b-2 bg-[rgb(43,43,43)] transition hover:text-muted-foreground"
 						>
 							Sign up
 						</Link>
 						<span>or</span>
 						<Link
-							href="/api/auth/signin"
+							href="/login"
 							className="p-1 px-2 rounded-[3px] border-b-2 bg-[rgb(43,43,43)] transition hover:text-muted-foreground"
 						>
 							Log in

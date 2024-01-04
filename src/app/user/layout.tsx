@@ -6,7 +6,7 @@ export default async function UserLayout({ children }: PropsWithChildren) {
 	const session = await auth();
 
 	if (!session || !session.user) {
-		redirect("/api/auth/signin");
+		redirect("/login");
 	}
 
 	return <>{children}</>;

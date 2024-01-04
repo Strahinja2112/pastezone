@@ -65,7 +65,7 @@ export default function Header() {
 				{status === "unauthenticated" && (
 					<div className="flex gap-3 pr-2">
 						<Link
-							href="/api/auth/signin"
+							href="/login"
 							className={buttonVariants({
 								variant: "outline",
 								size: "tiny",
@@ -74,7 +74,7 @@ export default function Header() {
 							LOGIN
 						</Link>
 						<Link
-							href="/api/auth/signin"
+							href="/login"
 							className={buttonVariants({
 								size: "tiny",
 							})}
